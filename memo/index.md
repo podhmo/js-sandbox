@@ -1,3 +1,13 @@
+# packageの作成
+
+個人用なので以下で済ます。
+
+```
+mkdir foo
+cd foo
+npm init
+````
+
 # npm
 
 ## npm のupgrade
