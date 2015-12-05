@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc -t es5 -m commonjs --experimentalDecorator --experimentalMetadata --moduleResolution node ./index.ts",
+    "tsc": "tsc -t es5 -m commonjs --experimentalDecorators --emitDecoratorMetadata --moduleResolution node ./index.ts",
     "browserify": "browserify ./index.js -o ./bundle.js",
     "build": "npm run tsc && npm run browserify"
   },
@@ -17,6 +17,7 @@
   "dependencies": {
     "angular2": "^2.0.0-alpha.48",
     "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-alpha.12",
     "zone.js": "^0.5.8"
   }
 }
