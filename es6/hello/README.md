@@ -1,8 +1,7 @@
-# es6-sandbox
+# hello
 
 ```
-$ npm install
-$ gulp compile
+$ npm run compile
 $ node -p 'var Hello = require("./lib").Hello; new Hello("foo")'
 { name: 'foo' }
 ```
