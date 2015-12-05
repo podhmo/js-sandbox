@@ -1,0 +1,20 @@
+{
+  "name": "es6-sandbox",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "babel-core": "^5.8.25",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-plumber": "^1.0.1",
+    "gulp-watch": "^4.3.5"
+  },
+  "scripts": {
+    "compile": "gulp compile",
+    "watch": "gulp watch"
+  },
+  "license": "ISC"
+}
