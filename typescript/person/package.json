@@ -1,0 +1,14 @@
+{
+  "name": "person",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -t es5 -m commonjs --moduleResolution node ./index.ts || true"
+  },
+  "dependencies": {
+    "typescript": "file:../core/node_modules/typescript"
+  },
+  "author": "",
+  "license": "ISC"
+}
