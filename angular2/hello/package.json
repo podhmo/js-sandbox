@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc -t es5 -m commonjs --experimentalDecorator --experimentalMetadata --moduleResolution node ./index.ts",
+    "browserify": "browserify ./index.js -o ./bundle.js",
+    "build": "npm run tsc && npm run browserify"
   },
   "author": "",
   "license": "ISC",
