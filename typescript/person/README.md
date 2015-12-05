@@ -1,5 +1,5 @@
 ```
 npm install
 npm run build
-node index.js
+node lib/index.js
 ```

@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -t es5 -m commonjs --moduleResolution node ./index.ts || true"
+    "build": "tsc -t es5 -m commonjs --moduleResolution node ./src/index.ts --out ./lib/index.js || true"
   },
   "dependencies": {
-    "typescript": "file:../core/node_modules/typescript"
   },
   "author": "",
   "license": "ISC"
