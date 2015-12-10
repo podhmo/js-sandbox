@@ -71,5 +71,20 @@ strings.forEach(s => {
     }
 });
 
-// Multi-file internal modules
-// (find-file "./multifiles")
+// Multi-file external modules
+// (find-file "../../multifiles/src/Test.ts")
+
+
+
+// Alias
+
+module Shapes {
+    export module Polygons {
+        export class Triangle {}
+        export class Square {}
+    }
+}
+
+import polygons = Shapes.Polygons
+var sq = new polygons.Square();  // same as new Shapes.Polygons.Square();
+

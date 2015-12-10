@@ -18,12 +18,14 @@ console.log(greeter.greet());
 // inheritance
 class Animal{
     name: String;
-    constructor(theName: string){
+    output: (msg: string) => void;
+    constructor(theName: string, output: (msg: string) => void = console.log){
         this.name = theName;
+        this.output = output;
     }
 
     move(meters: number = 0){
-        console.log(`${this.name} moved ${meters}m.`);
+        this.output(`${this.name} moved ${meters}m.`);
     }
 }
 
@@ -33,14 +35,14 @@ class Snake extends Animal{
     }
 
     move(meters: number = 5){
-        console.log("Slithering...");
+        this.output("Slithering...");
         super.move(meters);
     }
 }
 
 class Horse extends Animal{
     move(meters = 45){
-        console.log("Galloping...");
+        this.output("Galloping...");
         super.move(meters);
     }
 }
@@ -50,6 +52,15 @@ var tom: Animal = new Horse("Tommy the Palomino");
 
 sam.move();
 tom.move(34);
+
+// optional
+function withPrefix(prefix: string, msg: string){
+    console.log(`${prefix}${msg}`);
+}
+var foo = new Animal("foo", (msg) => withPrefix("-- ", msg));
+foo.move();
+
+
 
 
 // Understanding private
