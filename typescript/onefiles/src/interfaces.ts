@@ -1,5 +1,3 @@
-// http://www.typescriptlang.org/Handbook#interfaces
-
 // structural subtyping
 function printLabel(labeldObj: {label: string}){
     console.log(labeldObj.label);
