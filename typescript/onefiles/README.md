@@ -10,6 +10,7 @@ a place of sample code that one file only.
 - modules.ts -- http://www.typescriptlang.org/Handbook#modules
 - functions.ts -- http://www.typescriptlang.org/Handbook#functions
 - generics.ts -- http://www.typescriptlang.org/Handbook#generics
+- mixins.ts -- http://www.typescriptlang.org/Handbook#mixins
 
 参考
 
