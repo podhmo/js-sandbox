@@ -1,0 +1,15 @@
+{
+  "name": "peg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gen": "pegjs src/arithmetics.pegjs src/arithmetics-parser.js || true"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "pegjs": "^0.9.0"
+  }
+}
