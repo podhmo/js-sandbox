@@ -1,0 +1,15 @@
+{
+  "name": "angular-sandbox",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc -t es5 -m commonjs --experimentalDecorators --emitDecoratorMetadata --moduleResolution node ./src/hello/app.ts || true"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "angular": "~1.4.8",
+    "typescript": "~1.7.5"
+  }
+}
