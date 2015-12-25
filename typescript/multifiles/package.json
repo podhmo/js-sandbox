@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -t es5 -m commonjs --noEmitOnError --moduleResolution node ./src/*.ts --out ./index.js || true",
+    "build": "tsc -t es5 -m commonjs --noEmitOnError --moduleResolution node ./src/*.ts --outDir ./lib || true",
     "run": "npm run build && node ./index.js || true",
     "clean": "rm -f src/*.js || true"
   },
