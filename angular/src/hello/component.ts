@@ -5,7 +5,6 @@ export class HelloController {
 
 export class HelloTagDefinition {
     public static tag = "hello";
-
     static ddo(){
         return {
             restrict: 'E',

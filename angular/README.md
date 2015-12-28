@@ -19,6 +19,6 @@ dtsm
 ```
 ./node_modules/.bin/dtsm init
 ./node_modules/.bin/dtsm search angular
-./node_modules/.bin/dtsm install --save angular
+./node_modules/.bin/dtsm install --save angularjs/angular.d.ts
 # using link?
 ```

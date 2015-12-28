@@ -4,13 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc -t es5 -m commonjs --experimentalDecorators --emitDecoratorMetadata --moduleResolution node ./src/hello/app.ts || true"
+    "build": "gulp build"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "angular": "~1.4.8",
-    "typescript": "~1.7.5",
-    "dtsm": "~0.13.0"
+    "angular": "^1.4.8",
+    "typescript": "~1.7.5"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.11",
+    "dtsm": "^0.13.0",
+    "gulp": "^3.9.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.5.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browserify-shim": {
+    "angular": "global:angular"
   }
 }

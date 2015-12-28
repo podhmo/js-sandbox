@@ -1,4 +1,4 @@
-const angular = require('angular');
+import angular = require('angular');
 
 import {HelloTagDefinition} from "./component";
 
