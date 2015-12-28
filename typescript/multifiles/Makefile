@@ -1,2 +1,4 @@
+FILE ?= "src/*"
+
 default:
-	for i in src/*; do tsc -t es5 -m commonjs --noEmitOnError --moduleResolution node $$i/*.ts --outDir ./lib/`basename $$i`/; done
+	for i in ${FILE}; do tsc -t es5 -m commonjs --noImplicitAny --noEmitOnError --moduleResolution node $$i/*.ts --outDir ./lib/`basename $$i`/; done
