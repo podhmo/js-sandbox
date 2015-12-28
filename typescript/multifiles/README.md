@@ -40,5 +40,6 @@ dtsm install --save node
 - [schema](http://json.schemastore.org/tsconfig)
 
 ```
-tsc -project ./tsconfig.json
+python gen.py tsconfig.json src/zip > src/zip/tsconfig.json
+tsc -project src/zip
 ```
