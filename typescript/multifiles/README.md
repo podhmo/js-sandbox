@@ -34,3 +34,11 @@ dtsm install --save node
 
 - [vvakame/typescript-project-sample](https://github.com/vvakame/typescript-project-sample)
 - .etc
+
+## tsconfig.jsonを使うように書き換えていきたい
+
+- [schema](http://json.schemastore.org/tsconfig)
+
+```
+tsc -project ./tsconfig.json
+```

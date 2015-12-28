@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "removeComments": true, 
+    "target": "es5", 
+    "noEmitOnError": true, 
+    "noImplicitAny": true, 
+    "module": "commonjs", 
+    "sourceMap": false, 
+    "preserveConstEnums": true, 
+    "moduleResolution": "node", 
+    "outDir": "../../lib/zip"
+  }, 
+  "exclude": [
+    "node_modules"
+  ], 
+  "formatCodeOptions": {
+    "placeOpenBraceOnNewLineForControlBlocks": false, 
+    "convertTabsToSpaces": true, 
+    "insertSpaceAfterSemicolonInForStatements": true, 
+    "indentSize": 2, 
+    "insertSpaceBeforeAndAfterBinaryOperators": true, 
+    "insertSpaceAfterKeywordsInControlFlowStatements": true, 
+    "placeOpenBraceOnNewLineForFunctions": false, 
+    "insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false, 
+    "tabSize": 2, 
+    "insertSpaceAfterCommaDelimiter": true, 
+    "newLineCharacter": "\r\n", 
+    "insertSpaceAfterFunctionKeywordForAnonymousFunctions": false
+  }, 
+  "files": [
+    "index.ts", 
+    "LettersOnlyValidator.ts", 
+    "Validation.ts", 
+    "ZipCodeValidator.ts"
+  ]
+}
