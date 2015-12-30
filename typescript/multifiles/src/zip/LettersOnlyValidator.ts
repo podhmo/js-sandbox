@@ -1,4 +1,4 @@
-import validation = require('./Validation');
+import * as validation from "./Validation"
 
 var lettersRegexp = /^[A-Za-z]+$/;
 export class LettersOnlyValidator implements validation.StringValidator {

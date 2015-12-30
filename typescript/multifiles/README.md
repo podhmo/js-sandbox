@@ -22,6 +22,7 @@ node ./lib/zip
 - 分けたファイルをimportを使ってimport?
 - node.jsの機能を利用するコードを書いてみる
 - referenceの利用は避けたい
+- もう少し [importのこと](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#export-declarations) を把握したほうが良い
 
 ## node.jsの機能を使う方法
 

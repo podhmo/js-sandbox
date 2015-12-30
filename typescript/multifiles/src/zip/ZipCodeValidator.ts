@@ -1,4 +1,5 @@
-import validation = require("./Validation");
+import * as validation from "./Validation";
+
 var numberRegexp = /^[0-9]+$/;
 export class ZipCodeValidator implements validation.StringValidator {
     isAcceptable(s: string) {

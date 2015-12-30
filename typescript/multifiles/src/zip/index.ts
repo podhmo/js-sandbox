@@ -1,4 +1,4 @@
-import validation = require("./Validation");
+import * as validation from "./Validation";
 import {ZipCodeValidator} from "./ZipCodeValidator";
 import {LettersOnlyValidator} from "./LettersOnlyValidator";
 
