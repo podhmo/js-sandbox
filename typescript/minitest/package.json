@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --noImplicitAny -t es5 -m commonjs --noEmitOnError --moduleResolution node *.ts --outDir lib || true",
+    "build": "tsc --outDir lib || true",
     "test": "mocha test.js --reporter=dot || true",
     "fulltest": "npm run build && npm run test"
   },
