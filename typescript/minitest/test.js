@@ -17,4 +17,11 @@ describe("calculator test", function(){
     target.add(10);
     assert.strictEqual(target.value, 10);
   });
+  
+  it("update by add twice", function(){
+    var target = _getTarget();
+    target.add(10);
+    target.add(100);
+    assert.strictEqual(target.value, 110);
+  })
 });

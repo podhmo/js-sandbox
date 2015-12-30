@@ -28,7 +28,7 @@
     "src/hello/app.ts",
     "src/hello/component.ts"
   ],
-  "out": "lib/hello.js",
+  "outDir": "lib/hello",
   "exclude": [
     "node_modules"
   ]
