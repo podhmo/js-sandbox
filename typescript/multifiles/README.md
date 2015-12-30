@@ -9,11 +9,19 @@ node ./lib/zip
 # FILE=src/zip make
 ```
 
-## hmm
+## sample
+
+- fizzbuzz -- external moduleをimport,exportしたsample
+- zip -- requireを使って外部ファイルを読み込んだsample
+- helloserver -- node.d.tsを利用したsample
+- echoargv -- 自分で定義したd.tsを利用したsample
+
+## 考え事(WIP)
 
 - requireを使ってnode_modulesを使う？
 - 分けたファイルをimportを使ってimport?
 - node.jsの機能を利用するコードを書いてみる
+- referenceの利用は避けたい
 
 ## node.jsの機能を使う方法
 
