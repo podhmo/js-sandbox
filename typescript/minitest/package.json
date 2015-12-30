@@ -1,0 +1,17 @@
+{
+  "name": "minitest-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --noImplicitAny -t es5 -m commonjs --noEmitOnError --moduleResolution node *.ts --outDir lib || true",
+    "test": "mocha test.js --reporter=dot || true",
+    "fulltest": "npm run build && npm run test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "typescript": "^1.7.5"
+  }
+}
