@@ -5,10 +5,13 @@ function loosed(value?: number){
     return strict(value);
 }
 
-console.log(loosed(10));
+// console.log(loosed(10));
+
+// // runtime error
+// console.log(loosed(null));
+
+// // runtime error
+// console.log(loosed({}["value"]));
 
 // runtime error
-console.log(loosed(null));
-
-// runtime error
-console.log(loosed({}["value"]));
+// console.log(strict(null));
