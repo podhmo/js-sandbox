@@ -1,5 +1,5 @@
 {
-  "name": "es6-sandbox",
+  "name": "hello",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -7,8 +7,7 @@
   "devDependencies": {
   },
   "scripts": {
-    "compile": "gulp compile || true",
-    "watch": "gulp watch || true"
+    "build": "babel src --out-dir lib || true"
   },
   "license": "ISC"
 }
