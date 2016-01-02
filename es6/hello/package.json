@@ -7,7 +7,7 @@
   "devDependencies": {
   },
   "scripts": {
-    "build": "babel src --out-dir lib || true"
+    "build": "../node_modules/.bin/babel src --out-dir lib || true"
   },
   "license": "ISC"
 }
