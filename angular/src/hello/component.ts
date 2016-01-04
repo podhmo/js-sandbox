@@ -1,5 +1,5 @@
 export class HelloController {
-    constructor(public name: string ="foo"){
+    constructor(){
     }
 }
 
@@ -14,7 +14,11 @@ export class HelloTagDefinition {
             bindToController: {
                 name: '='
             },
-            templateUrl: './hello.html'
+            template: `
+                <p>hello: {{vm.name}}</p>
+                <input ng-model="vm.name">
+                `
+            // templateUrl: './hello.html'
         };
     }
 }

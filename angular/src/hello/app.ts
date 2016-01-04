@@ -1,8 +1,8 @@
-import angular = require('angular');
+import * as angular from "angular";
 
 import {HelloTagDefinition} from "./component";
 
 angular
     .module("app", [])
-    .controller(HelloTagDefinition.tag, HelloTagDefinition.ddo)
+    .directive(HelloTagDefinition.tag, HelloTagDefinition.ddo)
 ;

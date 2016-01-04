@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "gulp build"
+    "tsc": "for i in src/*; do tsc -p $i --outDir lib/`basename $i`; done || true",
+    "cphtml": "for i in src/**/*.html; do cp $i `echo $i | sed 's@src/@lib/@'`; done || true",
+    "browserify": "mkdir -p dist && for i in lib/*; do browserify $i/app.js > dist/`basename $i`.js; done || true",
+    "build": "npm run tsc && npm run cphtml && npm run browserify"
   },
   "author": "",
   "license": "BSD-2-Clause",
