@@ -1,3 +1,5 @@
+var assert = require('assert');
+
 describe("Restangular", function() {
   var benv = require('benv');
   var _angular;
@@ -16,9 +18,15 @@ describe("Restangular", function() {
     });
   });
 
-  it("hmm", function(done){
+  after(function(done){
+    benv.teardown();
+    done();
+  })
+
+
+  it("/users", function(){
     var angular = _angular;
-    angular.module("app", ["restangular", "ngMock"])
+    angular.module("app", ["restangular"])
     .factory("submitService", ["Restangular", function(Restangular){
       return {
         submit: function(){
@@ -27,19 +35,30 @@ describe("Restangular", function() {
       };
     }]);
 
-    var injector = angular.injector(["ng", "ngMock", "app"]);
-    var $httpBackend = injector.get("$httpBackend");
-    $httpBackend.when("GET", "/users", [{"name": "foo"}]);
+    var injector = angular.injector(["ng", "ngMockE2E", "app"]);
 
-    var p = injector.get("submitService").submit().then(function(response){
-      console.log(response);
-      done();
+    var $httpBackend = injector.get("$httpBackend");
+    $httpBackend.whenGET("/users").respond(200, [{"name": "foo"}], {});
+
+    return injector.get("submitService").submit().then(function(response){
+      assert.equal(response.length, 1);
+      assert.strictEqual(response[0].name, "foo");
     });
-    console.log(p);
   });
 
-  after(function(done){
-    benv.teardown();
-    done();
-  })
+  /*
+  // memo: mocha support asynchronous testing
+
+  it("old version", function(done){
+    doPromise().then(function(data){
+      assert.eual(data, 1)
+    }).then(done, done);
+  });
+
+  it("new version", function(){
+    return doPromise().then(function(data){
+      assert.eual(data, 1)
+    });
+  });
+   */
 });
