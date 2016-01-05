@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+  </head>
+  <style>
+    .box {
+    width: 100px;
+    height: 100px;
+    background: #aaa;
+    margin: 10px;
+    }
+  </style>
+  <!-- index.html -->
+  <body ng-app="app">
+    <a ng-href="#state1.list">Show List1</a>
+    <a ng-href="#state2.list">Show List2</a>
+    <div ng-view>
+    </div>
+  </body>
+
+  <script id="state1.list.html" type="text/ng-template">
+    <!-- partials/state1.list.html -->
+    <h1>List of State 1 Items</h1>
+    <pre>{{things|json}}</pre>
+    <div ng-repeat="x in items track by $index">
+      <a ng-href="#state1.list">Show List1</a>
+      <a ng-href="#state2.list">Show List2</a>
+      <div class="box">{{$index}} {{ x }}</div>
+    </div>
+  </script>
+
+  <script id="state2.list.html" type="text/ng-template">
+  <!-- partials/state2.list.html -->
+  <h1>List of State 2 Things</h1>
+  <div ng-repeat="x in things track by $index">
+      <a ng-href="#state1.list">Show List1</a>
+      <a ng-href="#state2.list">Show List2</a>
+      <div class="box">{{$index}} {{ x }}</div>
+  </div>
+</script>
+
+<script src="../dist/ng-router-sample.js"></script>
+</html>

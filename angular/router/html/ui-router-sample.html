@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="UTF-8"/></head>
+  <style>
+    .box {
+    width: 100px;
+    height: 100px;
+    background: #aaa;
+    margin: 10px;
+    }
+  </style>
+  <!-- index.html -->
+  <body ng-app="app">
+    <div ui-view></div>
+    <!-- We'll also add some navigation: -->
+    <a ui-sref="state1">State 1</a>
+    <a ui-sref="state2">State 2</a>
+  </body>
+
+  <script id="state1.html" type="text/ng-template">
+    <!-- partials/state1.list.html -->
+    <h1>State 1</h1>
+    <hr/>
+    <a ui-sref="state1.list">Show List1</a>
+    <div ui-view></div>
+  </script>
+
+  <script id="state2.html" type="text/ng-template">
+    <h2>State 2</h2>
+    <hr/>
+    <a ui-sref="state2.list">Show List2</a>
+    <div ui-view></div>
+  </script>
+
+
+  <script id="state1.list.html" type="text/ng-template">
+    <!-- partials/state1.list.html -->
+    <h3>List of State 1 Items</h3>
+    <div ng-repeat="x in items track by $index">
+      <a ui-sref="state1.list">Show List1</a>
+      <a ui-sref="state2.list">Show List2</a>
+      <div class="box">{{$index}} {{ x }}</div>
+    </div>
+  </script>
+
+  <script id="state2.list.html" type="text/ng-template">
+  <!-- partials/state2.list.html -->
+  <h3>List of State 2 Things</h3>
+  <div ng-repeat="x in things track by $index">
+      <a ui-sref="state1.list">Show List1</a>
+      <a ui-sref="state2.list">Show List2</a>
+      <div class="box">{{$index}} {{ x }}</div>
+  </div>
+</script>
+
+<script src="../dist/ui-router-sample.js"></script>
+</html>
