@@ -1,0 +1,21 @@
+{
+  "name": "simple",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "browserify": "mkdir -p dist && for i in src/*; do browserify $i/app.js > dist/`basename $i`.js; done || true",
+    "build": "npm run browserify"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "restangular": "~1.5.1",
+    "browserify": "~12.0.1"
+  },
+  "dependencies": {
+    "angular": "~1.4.8",
+    "restangular": "~1.5.1",
+    "underscore": "~1.8.3"
+  }
+}
