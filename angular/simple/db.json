@@ -1,0 +1,13 @@
+{
+  "dummies": [
+    {
+      "foo": "bar"
+    },
+    {
+      "submit_id": "xxxx",
+      "submit_name": "yyyy",
+      "submit_password": "zzzz",
+      "id": "a5fb30db-dd96-48ab-a3dd-e2cd466488d9"
+    }
+  ]
+}

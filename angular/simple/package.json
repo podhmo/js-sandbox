@@ -4,14 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "browserify": "mkdir -p dist && for i in src/*; do browserify $i/app.js > dist/`basename $i`.js; done || true",
+    "browserify": "mkdir -p dist && for i in src/*; do browserify $i/app.js -s app > dist/`basename $i`.js; done || true",
+    "mock": "json-server --watch db.json",
     "build": "npm run browserify"
   },
   "author": "",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "restangular": "~1.5.1",
-    "browserify": "~12.0.1"
+    "browserify": "~12.0.1",
+    "json-server": "~0.8.5"
   },
   "dependencies": {
     "angular": "~1.4.8",
