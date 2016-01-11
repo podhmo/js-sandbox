@@ -1,0 +1,15 @@
+{
+  "name": "singleton-or-factory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "benv": "^3.0.0"
+  }
+}

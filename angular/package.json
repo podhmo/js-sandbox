@@ -1,0 +1,17 @@
+{
+  "name": "angular-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.4.8"
+  },
+  "devDependencies": {
+    "benv": "^3.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
