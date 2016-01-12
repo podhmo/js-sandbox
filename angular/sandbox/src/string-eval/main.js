@@ -57,8 +57,8 @@ require('./setup')(function(angular){
   var $compile = injector.get("$compile");
   var $rootScope = injector.get("$rootScope");
   $rootScope.s = {person: {name: "bar", age: 10}};
-  var compiled = $compile("<cell person\"s.person\"=></cell>")($rootScope);
-  console.log('$compile("<cell person\"s.person\"=></cell>")');
+  var compiled = $compile("<cell person=\"s.person\"></cell>")($rootScope);
+  console.log('$compile("<cell person=\"s.person\"></cell>")');
   console.log(angular.element(compiled).html());
   $rootScope.$apply();
   console.log(angular.element(compiled).html());
