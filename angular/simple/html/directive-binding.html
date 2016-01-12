@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="UTF-8"/></head>
+  <body ng-app="app" ng-controller="state as s">
+    <div class="container">
+      <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
+      <control name="s.person.name" age="s.person.age"></control>
+      <div class="row">
+        <div class="col-md-4">
+          <h2>name</h2>
+          <binding x="s.person.name" y="s.person.name" z="s.person.name"></binding>
+        </div>
+        <div class="col-md-4">
+          <h2>age</h2>
+          <binding x="s.person.age" y="s.person.age" z="s.person.age"></binding>
+        </div>
+        <div class="col-md-4">
+          <h2>person</h2>
+          <binding x="s.person" y="s.person" z="s.person"></binding>
+        </div>
+      </div>
+    </div>
+    <script src="../dist/directive-binding.js"></script>
+  </body>
+  <script type="text/ng-template" id="partials/control.html">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="name">name</label>
+        <input ng-model="c.name" required type="text" class="form-control" id="ename" placeholder="name">
+      </div>
+      <div class="form-group">
+        <label for="age">age</label>
+        <input ng-model="c.age" type="number" class="form-control" id="age" placeholder="age">
+      </div>
+      <div class="form-group">
+        <pre>name: {{c.name}} age: {{c.age}}</pre>
+      </div>
+    </form>
+  </script>
+  <script type="text/ng-template" id="partials/binding.html">
+    <dl>
+      <dt>@</dt>
+      <dd>{{b.x}}</dd>
+      <dt>=</dt>
+      <dd>{{b.y}}</dd>
+      <dt>&</dt>
+      <dd>{{b.z}}</dd>
+    </dl>
+  </script>
+</html>
