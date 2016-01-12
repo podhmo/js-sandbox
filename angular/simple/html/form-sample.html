@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head><meta charset="UTF-8"/></head>
+  <body ng-app="app">
+    <container></container>
+  </body>
+  <script type="text/ng-template" id="partials/container.html">
+    <button ng-click="vm.toggle()">toggle</button>
+    <form ng-if="vm.isActive" name="myForm" ng-submit="vm.submit()">
+      <input name="name" ng-model="vm.name" capture>
+      <p>{{vm.name}}</p>
+      <input type="submit" value="submit">
+      <div ng-messages="myForm.name.$error" style="color:maroon" role="alert">
+        <div ng-message="required">You did not enter a field</div>
+        <div ng-message="minlength">Your field is too short</div>
+        <div ng-message="maxlength">Your field is too long</div>
+        <div ng-message="server">x: {{ vm.errors.server }}</div>
+      </div>
+    </form>
+  </script>
+  <script src="../dist/form-sample.js"></script>
+</html>
