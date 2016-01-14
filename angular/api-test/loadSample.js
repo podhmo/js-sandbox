@@ -5,13 +5,13 @@ function setup(cb){
   benv.setup(function(){
     global.Node = window.Node;
     benv.expose({
-      angular: benv.require('./node_modules/angular/angular.js', 'angular')
+      angular: benv.require(require.resolve("angular/angular"), "angular")
     });
-    cb();
+    cb(window.angular);
   });
 }
 
-setup(function(){
+setup(function(angular){
   console.log('window is', typeof window);
   console.log('document is', typeof document);
   console.log('angular is', typeof angular);
