@@ -42,11 +42,11 @@
     <form class="form-inline"p>
       <div class="form-group">
         <label for="name">name</label>
-        <input ng-model="c.name" required type="text" class="form-control" id="ename" placeholder="name">
+        <input ng-model="c.name" required type="text" class="form-control" id="ename" placeholder="name" required>
       </div>
       <div class="form-group">
         <label for="age">age</label>
-        <input ng-model="c.age" type="number" class="form-control" id="age" placeholder="age">
+        <input ng-model="c.age" type="number" class="form-control" id="age" placeholder="age" required="false">
       </div>
       <div class="form-group">
         <pre>name: {{c.name}} age: {{c.age}}</pre>
