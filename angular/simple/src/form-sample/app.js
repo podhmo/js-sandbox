@@ -4,7 +4,7 @@ require('angular-messages');
 
 angular.module("app", ["ngMessages"])
   .directive("container", require('./directives/container'))
-  .directive("capture", require('./directives/capture'))
+  .directive("myCapture", require('./directives/capture'))
 ;
 
 module.exports = {

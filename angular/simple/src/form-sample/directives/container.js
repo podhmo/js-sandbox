@@ -10,7 +10,7 @@ ContainerController.prototype.submit = function submit(){
   var data = {"server": "500 server error"};
   console.log("submit: %s", JSON.stringify(data, null, 2));
   this.errors = data;
-  this.$scope.$broadcast("submit", data);
+  this.$scope.$broadcast("@submit@", data);
 };
 ContainerController.prototype.toggle = function toggle(){
   this.isActive = !this.isActive;

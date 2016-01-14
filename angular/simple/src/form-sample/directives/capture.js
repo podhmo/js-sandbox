@@ -7,7 +7,7 @@ module.exports = function ddo(){
     scope: {
     },
     link: function(scope, elem, attrs, ctrl){
-      scope.$on("submit", function(newval){
+      scope.$on("@submit@", function(e, newval){
         if(!!newval){
           ctrl.$setValidity("server", false);
         }

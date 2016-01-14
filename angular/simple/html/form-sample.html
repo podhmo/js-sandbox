@@ -7,7 +7,7 @@
   <script type="text/ng-template" id="partials/container.html">
     <button ng-click="vm.toggle()">toggle</button>
     <form ng-if="vm.isActive" name="myForm" ng-submit="vm.submit()">
-      <input name="name" ng-model="vm.name" capture>
+      <input name="name" ng-model="vm.name" my-capture="name">
       <p>{{vm.name}}</p>
       <input type="submit" value="submit">
       <div ng-messages="myForm.name.$error" style="color:maroon" role="alert">
