@@ -2,7 +2,11 @@ enum Color {
   red, green, blue
 }
 console.log(JSON.stringify(Color, null, 2));
+class K {
+  public static TYPE: (typeof Color) = Color;
+}
 
+console.log(Color.red === K.TYPE.red);
 /*
 {
   "0": "red",
