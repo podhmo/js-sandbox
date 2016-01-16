@@ -1,8 +1,14 @@
 // server side
-interface PersonJSONData {
+interface JSONData {
+  [name: string]: JSONData|number|string|boolean|Array<JSONData|number|string|boolean>;
+}
+
+interface PersonData {
   name: string;
   age: number;
 }
+
+type PersonJSONData = PersonData & JSONData;
 
 function personAPI(): PersonJSONData {
   return {name: "foo",  "age": 10};
@@ -21,7 +27,7 @@ class Response<T> {
 class APIClient {
   constructor(public mapping: APIMapping) {}
 
-  get<T>(path: string) {
+  get<T extends JSONData>(path: string) {
     const data: T = this.mapping[path]();
     return new Response<T>(data);
   }
@@ -29,14 +35,19 @@ class APIClient {
 
 // domain
 
-class Person implements PersonJSONData {
+class Person implements PersonData {
   constructor(
-    public name: string,
-    public age: number
+    public name: string = "",
+    public age: number = 0
   ) {}
   say() {
     return `${this.name}(${this.age})`;
   }
+}
+
+interface ObjectConstructor {
+  assign(data0: any, data1: any): any;
+  assign<T>(data0: T, data1: T): T;
 }
 
 // application
@@ -48,11 +59,15 @@ function main() {
 
   const client = new APIClient(mapping);
 
-  // unfortunately, this is not compile error.
-  const person: Person = client.get<Person>("/person").data;
+  // // ok this is fixed.
+  // // unfortunately, this is not compile error.
+  // const person: Person = client.get<Person>("/person").data;
+  // // actually the value of person is not Person object, PersonJSONData object(just JSON data).
+  // console.log(person.say()); // error: say() method is not found
 
-  // actually the value of person is not Person object, PersonJSONData object(just JSON data).
-  console.log(person.say()); // error: say() method is not found
+  const data = client.get<PersonJSONData>("/person").data;
+  const person = Object.assign(new Person(), data);
+  console.log(person.say());
 }
 
 main();
