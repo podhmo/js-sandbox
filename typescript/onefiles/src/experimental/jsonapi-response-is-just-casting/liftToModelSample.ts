@@ -7,7 +7,7 @@ class Person {
 }
 
 interface JSONData {
-  [name: string]: JSONData|number|string|boolean|Array<JSONData|number|string|boolean>;
+  [name: string]: JSONData|number|string|boolean|JSONData[];
 }
 
 interface ObjectConstructor {
