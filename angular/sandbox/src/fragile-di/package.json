@@ -1,0 +1,20 @@
+{
+  "name": "fragile-di",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "typescript": "^1.7.3",
+    "benv": "^3.0.0",
+    "angular-messages": "~1.4.8"
+  },
+  "scripts": {
+    "download": "wget -i d.ts.list",
+    "normalize.d.ts": "gsed -i 's@../jquery/@./@' angular.d.ts",
+    "setup": "npm run download && npm run normalize.d.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
