@@ -12,17 +12,20 @@ function setup(cb){
 }
 
 setup(function(angular){
-  console.log('window is', typeof window);
-  console.log('document is', typeof document);
-  console.log('angular is', typeof angular);
-  console.log('window.angular === angular', window.angular === angular);
+  global._ = require('underscore');
+  require('restangular');
+  require('angular-mocks');
 
-  angular.module('myApp', [])
-    .controller('helloController', ['$scope', function ($scope) {
-      $scope.title = 'Node!';
-    }]);
+  require('./src/app');
+  var injector = angular.injector(["ng", "app", "ngMockE2E"]);
+  var useNewsService = injector.get("useNewsService");
 
-  document.body.innerHTML = '<div ng-controller="helloController">{{ title }}</div>';
-  angular.bootstrap(document, ['myApp']);
-  console.log(angular.element(document.body).html());
+  var k = useNewsService.use("1");
+  k.then(function(data){
+    return data;
+  })
+  .catch(function(data){
+    console.log(data);
+  });
 });
+
