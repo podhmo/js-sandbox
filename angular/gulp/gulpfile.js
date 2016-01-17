@@ -47,6 +47,9 @@ var config = {
   jsPath: function jsPath(name) {
     return path.join("./src/js/",  (name || ""));
   },
+  htmlPath: function jsPath(name) {
+    return path.join("./src/html/",  (name || ""));
+  },
   isProduction: function(){
     return (process.env.NODE_ENV || 'dev').toLowerCase() === 'production';
   },
@@ -137,8 +140,8 @@ gulp.task('html:inject', function(){
   ];
   var sources = gulp.src(files, {read: false});
   return gulp
-    .src('./html/index.html')
-    .pipe(inject(sources, {addPrefix: "..", relative: true}))
+    .src(config.htmlPath("index.html"))
+    .pipe(inject(sources, {addPrefix: ".", relative: true}))
     .pipe(gulp.dest(config.distPath("html")))
     .pipe(size({title: config.distPath("html"), showFiles: true}))
   ;
