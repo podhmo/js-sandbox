@@ -14,7 +14,7 @@ function register(){
     bindToController: {
       name: "&"
     },
-    template: "<p>{{ vm.name() }}: hello(id={{ vm.id }})</p>" // TODO: gulp-angular-templatecache
+    template: "/app/directives/hello/hello.html"
   };
 }
 

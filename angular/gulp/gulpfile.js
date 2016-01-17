@@ -6,9 +6,18 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
+
 var ngAnnotate = require('gulp-ng-annotate');
+var ngTemplateCache = require('gulp-angular-templatecache');
 
 var config = {
+  ngModuleName: "app",
+  ngTemplate: {
+    cacheFileName: "app.htmlcache.js",
+    ngModuleName: "app-template",
+    root: "/",
+    standalone: true
+  },
   appFileName: "app.js",
   vendorFileName: "vendor.js",
   distPath: function distPath(name) {
@@ -37,7 +46,7 @@ gulp.task('vendor', function(){
 
 gulp.task('browserify', function(){
   var b = browserify({
-    entries: './src/js/app/index.js',
+    entries: config.jsPath("app/index.js"),
     debug: true,
     standalone: "App",
     transform: ["browserify-shim"]
@@ -53,10 +62,17 @@ gulp.task('browserify', function(){
     .pipe(gulp.dest(config.distPath()));
 });
 
-gulp.task('inject', function(){
-  gulp.src(config.distPath(config.appFileName))
-  .pipe();
+
+gulp.task('template-cache', function(){
+  return gulp
+    .src(config.jsPath("**/*.html"))
+    .pipe(ngTemplateCache(config.ngTemplate.cacheFileName, {
+      module: config.ngTemplate.ngModuleName,
+      root: config.ngTemplate.root,
+      standalone: config.ngTemplate.standalone
+    }))
+    .pipe(gulp.dest('dist'));
 });
 
-gulp.task('build', ['browserify'], function () {
+gulp.task('build', ['vendor', 'browserify'], function () {
 });
