@@ -1,5 +1,6 @@
 import {NewsService} from "./news";
-import {News} from "../resources/news";
+import {News, NewsJSONData} from "../resources/news";
+import {Person} from "../resources/person";
 
 export class UseNewsService {
   constructor(private newsService: NewsService) {
@@ -7,7 +8,8 @@ export class UseNewsService {
   }
 
   use(id: string): ng.IPromise<News> {
-    return this.newsService.news.one(id).get<News>().then((news: News) => {
+    return this.newsService.news.one(id).get().then((data) => {
+      const news = new News(data);
       console.log(`@@ ${news.output()}`);
       return news;
     });

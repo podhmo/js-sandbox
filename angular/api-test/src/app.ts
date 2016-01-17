@@ -1,5 +1,4 @@
 /// <reference path="../typings/bundle.d.ts" />
-/// <reference path="./strict/object.d.ts" />
 
 import serviceSetup from "./services/index";
 import mockSetup from "./mocks/index";

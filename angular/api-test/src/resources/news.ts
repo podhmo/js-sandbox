@@ -3,6 +3,8 @@ export interface NewsData {
   message: string;
 }
 
+export type NewsJSONData = NewsData & JSONData;
+
 export class News implements NewsData {
   public name: string = "";
   public message: string = "";
