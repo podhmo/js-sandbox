@@ -20,6 +20,7 @@ var concat = require('gulp-concat');
 
 var ngAnnotate = require('gulp-ng-annotate');
 var ngTemplateCache = require('gulp-angular-templatecache');
+var inject = require('gulp-inject');
 
 // NODE_ENV=production gulp build
 // MINIFY=1 gulp build
@@ -127,7 +128,23 @@ gulp.task('html:patch', function(){
   ;
 });
 
-gulp.task('build', ['vendor', 'browserify', 'html:patch'], function() {
+gulp.task('html:inject', function(){
+  var files = [
+    config.distPath("css/*.css"),
+    config.distPath(path.join("js", config.vendorJSName)),
+    config.distPath(path.join("js", config.appFileName)),
+    config.distPath(path.join("js", config.ngTemplate.cacheFileName)),
+  ];
+  var sources = gulp.src(files, {read: false});
+  return gulp
+    .src('./html/index.html')
+    .pipe(inject(sources, {addPrefix: "..", relative: true}))
+    .pipe(gulp.dest(config.distPath("html")))
+    .pipe(size({title: config.distPath("html"), showFiles: true}))
+  ;
+});
+
+gulp.task('build', ['vendor', 'browserify', 'html:patch', "html:inject"], function() {
 });
 
 gulp.task("clean", function(){
