@@ -14,7 +14,7 @@ function register(){
     bindToController: {
       name: "&"
     },
-    template: "/app/directives/hello/hello.html"
+    templateUrl: "/app/directives/hello/hello.html"
   };
 }
 
