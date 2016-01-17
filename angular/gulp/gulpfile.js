@@ -16,6 +16,7 @@ var gif = require('gulp-if');
 var uglify = require('gulp-uglify');
 var uglifySaveLicense = require('uglify-save-license');
 var csso = require('gulp-csso');
+var minifyHtml = require('gulp-minify-html');
 var concat = require('gulp-concat');
 
 var ngAnnotate = require('gulp-ng-annotate');
@@ -87,7 +88,7 @@ gulp.task("vendor:css", function(){
   ];
   // todo:update
   return gulp.src(files)
-    .pipe(gif(config.isProduction(), csso()))
+    .pipe(gif(config.enableMinify(), csso()))
     .pipe(concat(config.vendorCSSName))
     .pipe(gulp.dest(config.distPath("css/")))
     .pipe(size({title: config.distPath("css/"), showFiles: true}))
@@ -121,6 +122,12 @@ gulp.task('browserify', function(){
 gulp.task('html:patch', function(){
   return gulp
     .src(config.jsPath("**/*.html"))
+    .pipe(gif(config.enableMinify(), minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true,
+      conditionals: true
+    })))
     .pipe(ngTemplateCache(config.ngTemplate.cacheFileName, {
       module: config.ngTemplate.ngModuleName,
       root: config.ngTemplate.root,
@@ -142,12 +149,20 @@ gulp.task('html:inject', function(){
   return gulp
     .src(config.htmlPath("index.html"))
     .pipe(inject(sources, {addPrefix: ".", relative: true}))
+    .pipe(gif(config.enableMinify(), minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true,
+      conditionals: true
+    })))
     .pipe(gulp.dest(config.distPath("html")))
     .pipe(size({title: config.distPath("html"), showFiles: true}))
   ;
 });
 
-gulp.task('build', ['vendor', 'browserify', 'html:patch', "html:inject"], function() {
+gulp.task("html", ['html:patch', "html:inject"]);
+
+gulp.task('build', ['vendor', 'browserify', "html"], function() {
 });
 
 gulp.task("clean", function(){
