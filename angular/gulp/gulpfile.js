@@ -32,6 +32,10 @@ var config = {
     root: "/",
     standalone: true
   },
+  jsEntryPointName: function jsEntryPoint(){
+    var env = this.isProduction()? "production" : "dev";
+    return "app/app." + env + ".js";
+  },
   appFileName: "app.js",
   appModuleName: "App",
   vendorJSName: "vendor.js",
@@ -90,7 +94,7 @@ gulp.task('vendor', ["vendor:css", "vendor:js"]);
 
 gulp.task('browserify', function(){
   var b = browserify({
-    entries: config.jsPath("app/index.js"),
+    entries: config.jsPath(config.jsEntryPointName()),
     debug: true,
     standalone: config.appModuleName,
     transform: ["browserify-shim"]
@@ -110,7 +114,7 @@ gulp.task('browserify', function(){
 });
 
 
-gulp.task('template-cache', function(){
+gulp.task('html:patch', function(){
   return gulp
     .src(config.jsPath("**/*.html"))
     .pipe(ngTemplateCache(config.ngTemplate.cacheFileName, {
@@ -123,7 +127,7 @@ gulp.task('template-cache', function(){
   ;
 });
 
-gulp.task('build', ['vendor', 'browserify', 'template-cache'], function() {
+gulp.task('build', ['vendor', 'browserify', 'html:patch'], function() {
 });
 
 gulp.task("clean", function(){

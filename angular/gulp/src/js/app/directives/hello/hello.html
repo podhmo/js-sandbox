@@ -1,1 +1,7 @@
-<p>{{ vm.name() }}: hello(id={{ vm.id }})</p>
+
+<dl>
+  <dt>id</dt>{{ vm.id }}<dd></dd>
+  <dt>env</dt><dd>{{ vm.config.env }}</dd>
+</dl>
+
+<div>message:<pre>{{ vm.name() }}: hello</pre></div>

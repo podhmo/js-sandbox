@@ -1,8 +1,9 @@
 'use strict';
 
-function HelloController($scope){
+function HelloController($scope, config){
   'ngInject';
   this.id = $scope.$id;
+  this.config = config;
 }
 
 function register(){
