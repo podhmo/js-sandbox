@@ -4,6 +4,7 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
+    "vendor": "gulp vendor",
     "browserify": "gulp browserify"
   },
   "author": "",
@@ -19,5 +20,8 @@
   },
   "dependencies": {
     "angular": "^1.4.8"
+  },
+  "browserify-shim": {
+    "angular": "global:angular"
   }
 }

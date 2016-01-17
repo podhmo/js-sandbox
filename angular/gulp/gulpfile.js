@@ -8,6 +8,19 @@ var gutil = require('gulp-util');
 var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('vendor', function(){
+  var b = browserify({
+    entries: './src/js/vendor.js',
+    debug: false,
+    transform: []
+  });
+
+  return b.bundle()
+    .pipe(source('vendor.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('browserify', function(){
@@ -15,11 +28,8 @@ gulp.task('browserify', function(){
     entries: './src/js/app/index.js',
     debug: true,
     standalone: "App",
-    transform: [] // TODO: "browserify-shim"
+    transform: ["browserify-shim"]
   });
-
-  // todo: does not touch. gulp file.(using browserify-shim?)
-  b.external(require.resolve("angular"));
 
   return b.bundle()
     .pipe(source('app.js'))
