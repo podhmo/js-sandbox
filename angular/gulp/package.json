@@ -5,7 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "vendor": "gulp vendor",
-    "browserify": "gulp browserify"
+    "build": "gulp build"
   },
   "author": "",
   "license": "ISC",
