@@ -1,8 +1,9 @@
 'use strict';
 
 function HelloController($scope){
+  'ngInject';
+  this.id = $scope.$id;
 }
-HelloController.$inject = ["$scope"]; // TODO: ng-annotate
 
 function register(){
   return {
@@ -13,7 +14,7 @@ function register(){
     bindToController: {
       name: "&"
     },
-    template: "<p>{{vm.name()}}: hello</p>" // TODO: gulp-angular-templatecache
+    template: "<p>{{ vm.name() }}: hello(id={{ vm.id }})</p>" // TODO: gulp-angular-templatecache
   };
 }
 

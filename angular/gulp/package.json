@@ -13,6 +13,7 @@
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "gulp": "^3.9.0",
+    "gulp-ng-annotate": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
     "vinyl-buffer": "^1.0.0",
