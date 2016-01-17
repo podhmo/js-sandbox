@@ -8,12 +8,15 @@ var buffer = require('vinyl-buffer');
 var sourcemaps = require('gulp-sourcemaps');
 
 var gutil = require('gulp-util');
+var del = require('del');
 var size = require('gulp-size');
 var gif = require('gulp-if');
 // var debug = require('gulp-debug');
 
 var uglify = require('gulp-uglify');
 var uglifySaveLicense = require('uglify-save-license');
+var csso = require('gulp-csso');
+var concat = require('gulp-concat');
 
 var ngAnnotate = require('gulp-ng-annotate');
 var ngTemplateCache = require('gulp-angular-templatecache');
@@ -31,7 +34,8 @@ var config = {
   },
   appFileName: "app.js",
   appModuleName: "App",
-  vendorFileName: "vendor.js",
+  vendorJSName: "vendor.js",
+  vendorCSSName: "vendor.css",
   distPath: function distPath(name) {
     return path.join("./dist/", name || "");
   },
@@ -49,24 +53,40 @@ var config = {
   }
 };
 
-gulp.task('vendor', function(){
+gulp.task('vendor:js', function(){
   var b = browserify({
-    entries: config.jsPath(config.vendorFileName),
+    entries: config.jsPath(config.vendorJSName),
     debug: true,
     transform: []
   });
 
   return b.bundle()
-    .pipe(source(config.vendorFileName))
+    .pipe(source(config.vendorJSName))
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .on('error', gutil.log)
     .pipe(gif(config.enableMinify(), uglify({preserveComments: uglifySaveLicense})))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(config.distPath()))
-    .pipe(size({title: config.distPath(), showFiles: true}))
+    .pipe(gulp.dest(config.distPath("js/")))
+    .pipe(size({title: config.distPath("js/"), showFiles: true}))
   ;
 });
+
+gulp.task("vendor:css", function(){
+  var files = [
+    "./node_modules/bootstrap/dist/css/bootstrap.css",
+    "./node_modules/bootstrap/dist/css/bootstrap-theme.css",
+  ];
+  // todo:update
+  return gulp.src(files)
+    .pipe(gif(config.isProduction(), csso()))
+    .pipe(concat(config.vendorCSSName))
+    .pipe(gulp.dest(config.distPath("css/")))
+    .pipe(size({title: config.distPath("css/"), showFiles: true}))
+  ;
+});
+
+gulp.task('vendor', ["vendor:css", "vendor:js"]);
 
 gulp.task('browserify', function(){
   var b = browserify({
@@ -84,8 +104,8 @@ gulp.task('browserify', function(){
 	  .pipe(ngAnnotate())
     .pipe(gif(config.enableMinify(), uglify({preserveComments: uglifySaveLicense})))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest(config.distPath()))
-    .pipe(size({title: config.distPath(), showFiles: true}))
+    .pipe(gulp.dest(config.distPath("js/")))
+    .pipe(size({title: config.distPath("js/"), showFiles: true}))
   ;
 });
 
@@ -98,10 +118,16 @@ gulp.task('template-cache', function(){
       root: config.ngTemplate.root,
       standalone: config.ngTemplate.standalone
     }))
-    .pipe(gulp.dest('dist'))
-    .pipe(size({title: config.distPath(), showFiles: true}))
+    .pipe(gulp.dest(config.distPath("js/")))
+    .pipe(size({title: config.distPath("js/"), showFiles: true}))
   ;
 });
 
-gulp.task('build', ['vendor', 'browserify', 'template-cache'], function () {
+gulp.task('build', ['vendor', 'browserify', 'template-cache'], function() {
+});
+
+gulp.task("clean", function(){
+  return del([
+    path.join(config.distPath("*"))
+  ]);
 });
