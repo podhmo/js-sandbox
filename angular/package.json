@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "angular": "^1.4.8",
-    "angular-messages": "~1.4.8"
+    "angular-messages": "~1.4.8",
+    "angular-mocks": "~1.4.8"
   },
   "devDependencies": {
     "benv": "^3.0.0"
