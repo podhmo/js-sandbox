@@ -1,0 +1,15 @@
+{
+  "name": "client-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "browserify src/app.js > dist/app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "browserify": "^13.0.0"
+  }
+}
