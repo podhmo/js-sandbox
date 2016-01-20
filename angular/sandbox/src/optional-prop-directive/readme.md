@@ -59,17 +59,24 @@ app4.js
 $ node app4.js
 ----------------------------------------
 <user class="ng-isolate-scope"><name class="ng-binding">foo</name>
-<x><item>
-<y><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: </pre>
-<!-- ngIf: i.info --><pre ng-if="i.info" class="ng-binding ng-scope">info2: </pre><!-- end ngIf: i.info --></item></y></item></x></user>
+<x><item class="ng-isolate-scope"><description class="ng-binding">info: </description>
+<!-- ngIf: i.info() --></item></x>
+<y><item info="u.item" class="ng-isolate-scope"><description class="ng-binding">info: </description>
+<!-- ngIf: i.info() --></item></y>
+<z><!-- ngIf: u.item --></z></user>
 ----------------------------------------
 <user class="ng-isolate-scope"><name class="ng-binding">foo</name>
-<x><item>
-<y><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: </pre>
-<!-- ngIf: i.info --><pre ng-if="i.info" class="ng-binding ng-scope">info2: </pre><!-- end ngIf: i.info --></item></y></item></x></user>
+<x><item class="ng-isolate-scope"><description class="ng-binding">info: </description>
+<!-- ngIf: i.info() --></item></x>
+<y><item info="u.item" class="ng-isolate-scope"><description class="ng-binding">info: </description>
+<!-- ngIf: i.info() --></item></y>
+<z><!-- ngIf: u.item --></z></user>
 ----------------------------------------
 <user class="ng-isolate-scope"><name class="ng-binding">foo</name>
-<x><item>
-<y><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: this-is-message</pre>
-<!-- ngIf: i.info --><pre ng-if="i.info" class="ng-binding ng-scope">info2: this-is-message</pre><!-- end ngIf: i.info --></item></y></item></x></user>
+<x><item class="ng-isolate-scope"><description class="ng-binding">info: @default@</description>
+<!-- ngIf: i.info() --><description ng-if="i.info()" class="ng-binding ng-scope">info2: @default@</description><!-- end ngIf: i.info() --></item></x>
+<y><item info="u.item" class="ng-isolate-scope"><description class="ng-binding">info: this-is-message</description>
+<!-- ngIf: i.info() --><description ng-if="i.info()" class="ng-binding ng-scope">info2: this-is-message</description><!-- end ngIf: i.info() --></item></y>
+<z><!-- ngIf: u.item --><item ng-if="u.item" info="u.item" class="ng-scope ng-isolate-scope"><description class="ng-binding">info: this-is-message</description>
+<!-- ngIf: i.info() --><description ng-if="i.info()" class="ng-binding ng-scope">info2: this-is-message</description><!-- end ngIf: i.info() --></item><!-- end ngIf: u.item --></z></user>
 ```

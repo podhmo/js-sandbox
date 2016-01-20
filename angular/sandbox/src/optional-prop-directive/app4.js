@@ -3,9 +3,9 @@ require('../setup')(function(angular){
 
   var userTemplate = [
     "<name>{{::u.name}}</name>",
-    "<X><item></item</X>",
-    "<Y><item info=\"u.item\"></item</Y>",
-    "<Z><item ng-if=\"u.item\" info=\"u.item\"></item</Z>",
+    "<X><item/></X>",
+    "<Y><item info=\"u.item\"></item></Y>",
+    "<Z><item ng-if=\"u.item\" info=\"u.item\"></item></Z>",
   ].join("\n");
 
   function UserDirective(){
@@ -25,21 +25,26 @@ require('../setup')(function(angular){
     };
   }
   var infoTemplate = [
-    "<pre>info: {{::i.info().description}}</pre>",
-    "<pre ng-if=\"i.info\">info2: {{::i.info().description}}</pre>"
+    "<description>info: {{::i.info().description}}</description>",
+    "<description ng-if=\"i.info()\">info2: {{::i.info().description}}</description>"
   ].join("\n");
 
-  function InfoDirective($timeout){
-    function InfoController(){
+  function ItemDirective($timeout){
+    function ItemController(){
      }
     function link(scope, element, attrs, ctrl){
-      $timeout(function(){
-        ctrl.info = function(){return {"description": "@default@"};};
-      }.bind(this), 10);
+      if(!ctrl.info){
+        var defaultValue = {"description": "@default@"};
+        $timeout(function(){
+          ctrl.info = function(){
+            return defaultValue;
+          };
+        }.bind(this), 10);
+      }
     }
     return {
       retrict: "E",
-      controller: InfoController,
+      controller: ItemController,
       controllerAs: "i",
       scope: {},
       bindToController: {
@@ -51,7 +56,7 @@ require('../setup')(function(angular){
   }
 
   app.directive("user", UserDirective);
-  app.directive("info", InfoDirective);
+  app.directive("item", ItemDirective);
 
   var injector = angular.injector(["ng", "app"]);
   var $rootScope = injector.get("$rootScope");
