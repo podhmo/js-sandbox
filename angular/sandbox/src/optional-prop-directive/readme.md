@@ -3,8 +3,9 @@
 - app3.js -- binding by = and ng-if
 - app4.js -- binding by & and ng-if and optional
 
+app.js
 ```html
-node app.js
+$ node app.js
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
@@ -17,8 +18,9 @@ node app.js
 </item></dd></dl></user>
 ```
 
+app2.js
 ```html
-node app2.js
+$ node app2.js
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
@@ -36,6 +38,7 @@ node app2.js
 app3.js
 
 ```html
+$ node app3.js
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
@@ -53,6 +56,7 @@ app3.js
 app4.js
 
 ```html
+$ node app4.js
 ----------------------------------------
 <user class="ng-isolate-scope"><name class="ng-binding">foo</name>
 <x><item>
