@@ -4,8 +4,7 @@ require('../setup')(function(angular){
   var userTemplate = [
     "<dl>",
     "<dt>{{::u.name}}</dt>",
-    "<dd><item info=\"u.item\"></item</dd>",
-    "<dd><item ng-if=\"u.item\" info=\"u.item\"></item</dd>",
+    "<dd><info item=\"u.info\"></info</dd>",
     "</dl>"
   ].join("\n");
 
@@ -13,7 +12,7 @@ require('../setup')(function(angular){
     function UserController($timeout){
       this.name = "foo";
       $timeout(function(){
-        this.item = {"description": "this-is-message"};
+        this.info = {"description": "this-is-message"};
       }.bind(this), 10);
     }
     return {
@@ -26,7 +25,7 @@ require('../setup')(function(angular){
     };
   }
   var infoTemplate = [
-    "<pre>info: {{::i.info().description}}</pre>"
+    "<pre>info: {{::i.item().description}}</pre>"
   ].join("\n");
 
   function InfoDirective(){
@@ -38,7 +37,7 @@ require('../setup')(function(angular){
       controllerAs: "i",
       scope: {},
       bindToController: {
-        "info": "&"
+        "item": "&"
      },
       template: infoTemplate
     };

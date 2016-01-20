@@ -9,13 +9,11 @@ $ node app.js
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
-<dd><item item="u.item">
-</item></dd></dl></user>
+<dd><info item="u.info" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></info></dd></dl></user>
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
-<dd><item item="u.item">
-</item></dd></dl></user>
+<dd><info item="u.info" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></info></dd></dl></user>
 ```
 
 app2.js
@@ -24,15 +22,15 @@ $ node app2.js
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
-<dd><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></item></dd><dd><!-- ngIf: u.item --></dd></dl></user>
+<dd><info item="u.info" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></info></dd></dl></user>
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
-<dd><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></item></dd><dd><!-- ngIf: u.item --></dd></dl></user>
+<dd><info item="u.info" class="ng-isolate-scope"><pre class="ng-binding">info: </pre></info></dd></dl></user>
 ----------------------------------------
 <user class="ng-isolate-scope"><dl>
 <dt class="ng-binding">foo</dt>
-<dd><item info="u.item" class="ng-isolate-scope"><pre class="ng-binding">info: this-is-message</pre></item></dd><dd><!-- ngIf: u.item --><item ng-if="u.item" info="u.item" class="ng-scope ng-isolate-scope"><pre class="ng-binding">info: this-is-message</pre></item><!-- end ngIf: u.item --></dd></dl></user>
+<dd><info item="u.info" class="ng-isolate-scope"><pre class="ng-binding">info: this-is-message</pre></info></dd></dl></user>
 ```
 
 app3.js

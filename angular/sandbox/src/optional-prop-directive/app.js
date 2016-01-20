@@ -4,7 +4,7 @@ require('../setup')(function(angular){
   var userTemplate = [
     "<dl>",
     "<dt>{{::u.name}}</dt>",
-    "<dd><item item=\"u.item\"></item</dd>",
+    "<dd><info item=\"u.info\"></info</dd>",
     "</dl>"
   ].join("\n");
 
@@ -22,7 +22,7 @@ require('../setup')(function(angular){
     };
   }
   var infoTemplate = [
-    "<pre>info: {{::i.info().description}}</pre>"
+    "<pre>info: {{::i.item().description}}</pre>"
   ].join("\n");
 
   function InfoDirective(){
@@ -34,7 +34,7 @@ require('../setup')(function(angular){
       controllerAs: "i",
       scope: {},
       bindToController: {
-        "ob": "&"
+        "item": "&"
      },
       template: infoTemplate
     };
