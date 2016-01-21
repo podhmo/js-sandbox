@@ -12,7 +12,10 @@ require('../setup')(function(angular){
       this.state = "loaded";
     }.bind(this), 30);
     this.state = "loading...";
-    this.user = null;
+
+    // this is ok. but..
+    // this.user = null;
+    this.user = {"name": "", "age": ""};
  }
 
   function ParentDirective(){
@@ -28,7 +31,7 @@ require('../setup')(function(angular){
         '<child user="parent.user"></child>',
         '<p>{{parent.state}}</p>',
         '</div>'
-      ]
+      ].join("\n")
     };
   }
 

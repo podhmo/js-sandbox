@@ -28,7 +28,7 @@ require('../setup')(function(angular){
         '<child name="parent.user.name" age="parent.user.age"></child>',
         '<p>{{parent.state}}</p>',
         '</div>'
-      ]
+      ].join("\n")
     };
   }
 
