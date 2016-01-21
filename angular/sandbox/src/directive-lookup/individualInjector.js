@@ -11,47 +11,6 @@ module.exports = function extract(angular, context){
   }
 
   function createInjector(modulesToLoad, strictDi) {
-    strictDi = (strictDi === true);
-    var INSTANTIATING = {},
-        providerSuffix = 'Provider',
-        path = [],
-        loadedModules = new HashMap([], true),
-        providerCache = {
-          $provide: {
-            provider: supportObject(provider),
-            factory: supportObject(factory),
-            service: supportObject(service),
-            value: supportObject(value),
-            constant: supportObject(constant),
-            decorator: decorator
-          }
-        },
-        providerInjector = (providerCache.$injector =
-                            createInternalInjector(providerCache, function(serviceName, caller) {
-                              if (angular.isString(caller)) {
-                                path.push(caller);
-                              }
-                              throw new Error('unpr', "Unknown provider: {0}", path.join(' <- '));
-                            })),
-        instanceCache = {},
-        instanceInjector = (instanceCache.$injector =
-                            createInternalInjector(instanceCache, function(serviceName, caller) {
-                              var provider = providerInjector.get(serviceName + providerSuffix, caller);
-                              return instanceInjector.invoke(provider.$get, provider, undefined, serviceName);
-                            }));
-
-    angular.forEach(loadModules(modulesToLoad), function(fn) { if (fn) instanceInjector.invoke(fn); });
-
-
-    context.INSTANTIATING = INSTANTIATING;
-    context.providerSuffix = providerSuffix;
-    context.path = path;
-    context.loadedModules = loadedModules;
-    context.providerCache = providerCache;
-    context.providerInjector = providerInjector;
-    context.instanceCache = instanceCache;
-    context.instanceInjector = instanceInjector;
-    return instanceInjector;
 
     ////////////////////////////////////
     // $provider
@@ -74,14 +33,15 @@ module.exports = function extract(angular, context){
       if (!provider_.$get) {
         throw new Error('pget', "Provider '{0}' must define $get factory method.", name);
       }
-      return providerCache[name + providerSuffix] = provider_;
+      var instance = providerCache[name + providerSuffix] = provider_;
+      return instance;
     }
 
     function enforceReturnValue(name, factory) {
       return function enforcedReturnValue() {
         var result = instanceInjector.invoke(factory, this);
         if (angular.isUndefined(result)) {
-          throw $injectorMinErr('undef', "Provider '{0}' must return a value from $get factory method.", name);
+          throw new Error('undef', "Provider '{0}' must return a value from $get factory method.", name);
         }
         return result;
       };
@@ -102,7 +62,6 @@ module.exports = function extract(angular, context){
     function value(name, val) { return factory(name, valueFn(val), false); }
 
     function constant(name, value) {
-      assertNotHasOwnProperty(name, 'constant');
       providerCache[name] = value;
       instanceCache[name] = value;
     }
@@ -151,7 +110,6 @@ module.exports = function extract(angular, context){
             // assertArgFn(module, 'module');
           }
         } catch (e) {
-          throw e;
           if (angular.isArray(module)) {
             module = module[module.length - 1];
           }
@@ -187,7 +145,8 @@ module.exports = function extract(angular, context){
           try {
             path.unshift(serviceName);
             cache[serviceName] = INSTANTIATING;
-            return cache[serviceName] = factory(serviceName, caller);
+            var instance = cache[serviceName] = factory(serviceName, caller);
+            return instance;
           } catch (err) {
             if (cache[serviceName] === INSTANTIATING) {
               delete cache[serviceName];
@@ -217,9 +176,7 @@ module.exports = function extract(angular, context){
                                   'Incorrect injection token! Expected service name as string, got {0}', key);
           }
           args.push(
-            locals && locals.hasOwnProperty(key)
-              ? locals[key]
-              : getService(key, serviceName)
+            locals && locals.hasOwnProperty(key) ? locals[key] : getService(key, serviceName)
           );
         }
         if (angular.isArray(fn)) {
@@ -251,6 +208,48 @@ module.exports = function extract(angular, context){
         }
       };
     }
+
+    strictDi = (strictDi === true);
+    var INSTANTIATING = {},
+        providerSuffix = 'Provider',
+        path = [],
+        loadedModules = new HashMap([], true),
+        providerCache = {
+          $provide: {
+            provider: supportObject(provider),
+            factory: supportObject(factory),
+            service: supportObject(service),
+            value: supportObject(value),
+            constant: supportObject(constant),
+            decorator: decorator
+          }
+        },
+        providerInjector = (providerCache.$injector =
+                            createInternalInjector(providerCache, function(serviceName, caller) {
+                              if (angular.isString(caller)) {
+                                path.push(caller);
+                              }
+                              throw new Error('unpr', "Unknown provider: {0}", path.join(' <- '));
+                            })),
+        instanceCache = {},
+        instanceInjector = (instanceCache.$injector =
+                            createInternalInjector(instanceCache, function(serviceName, caller) {
+                              var provider = providerInjector.get(serviceName + providerSuffix, caller);
+                              return instanceInjector.invoke(provider.$get, provider, undefined, serviceName);
+                            }));
+
+    angular.forEach(loadModules(modulesToLoad), function(fn) { if (fn) instanceInjector.invoke(fn); });
+
+
+    context.INSTANTIATING = INSTANTIATING;
+    context.providerSuffix = providerSuffix;
+    context.path = path;
+    context.loadedModules = loadedModules;
+    context.providerCache = providerCache;
+    context.providerInjector = providerInjector;
+    context.instanceCache = instanceCache;
+    context.instanceInjector = instanceInjector;
+    return instanceInjector;
   }
 
   createInjector.$$annotate = inj.annotate;
