@@ -8,7 +8,10 @@ function pp(e){
   console.log(replaced);
 }
 
-require('../setup')(function(angular){
+var ca = require('console-angular');
+
+
+ca.setup(function(angular){
   var app = angular.module("app", []);
 
   function directiveFactory(init){
@@ -69,5 +72,4 @@ require('../setup')(function(angular){
     }
   }
   watch(5);
-
 });
