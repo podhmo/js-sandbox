@@ -26,7 +26,7 @@ ca.setup(function(angular, document){
       restrict: "E",
       scope: {},
       bindToController: {current: "="},
-      controller: function($scope){
+      controller: function($scope, $timeout){
         $scope.$watch(
           "vm.current",
           function(newValue, oldValue){
@@ -39,6 +39,9 @@ ca.setup(function(angular, document){
             console.log("changed2: %s -> %s", oldValue, newValue);
           }
         );
+        $timeout(function(){
+          this.current = "weeeeeeeeeeeeeeeeeeeeeeee!";
+        }.bind(this), 40);
       },
       controllerAs: "vm",
       template: [
@@ -55,4 +58,8 @@ ca.setup(function(angular, document){
     console.log("----------------------------------------");
     console.log(angular.element(document.body).html());
   }, 30);
+  setTimeout(function(){
+    console.log("----------------------------------------");
+    console.log(angular.element(document.body).html());
+  }, 60);
 });
