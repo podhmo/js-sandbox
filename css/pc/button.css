@@ -1,0 +1,9 @@
+.button .warn {
+    background-color: orange;
+}
+.button .danger {
+    background-color: red;
+}
+.button .primary {
+    background-color: blue;
+}

@@ -1,0 +1,9 @@
+.pc .button .warn {
+    background-color: orange;
+}
+.pc .button .danger {
+    background-color: red;
+}
+.pc .button .primary {
+    background-color: blue;
+}
