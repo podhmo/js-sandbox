@@ -1,0 +1,20 @@
+.tooltip-overlay {
+  position: relative;
+  width: 100px;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip.message-box {
+  border: #000 solid 1px;
+  width: 250px;
+  padding: 0 0.5rem;
+}
+
+.tooltip--lt {
+  top: 0px;
+  left: 1.5rem;
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/tooltip.css">
+  </head>
+  <body>
+    <section class="container">
+      <div class="tooltip-overlay">
+        <span class="js-tooltip icon icon-help" data-target="#help"></span>
+        <div class="js-hide tooltip message-box tooltip--lt" id="help">
+          <p>hello.
+          this is tooltip message.</p>
+        </div>
+      </div>
+    </section>
+    <script>
+      document.querySelector(".js-tooltip").addEventListener('mouseenter', function(e){
+        var tooltop = document.querySelector(e.target.dataset.target);
+        if (tooltop.classList.contains('js-hide')) {
+          tooltop.classList.remove('js-hide');
+        }
+      });
+      document.querySelector(".js-tooltip").addEventListener('mouseleave', function(e){
+        var tooltop = document.querySelector(e.target.dataset.target);
+        if (!tooltop.classList.contains('js-hide')) {
+          tooltop.classList.add('js-hide');
+        }
+      });
+    </script>
+  </body>
+</html>

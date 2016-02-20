@@ -2,6 +2,22 @@
   padding: 3rem;
 }
 
+.icon {
+  background-color: #aaa;
+  display: inline-block;
+  opacity: 0.8;
+  border-radius: 50%;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-weight: bold;
+}
+
+.icon-help:after {
+  cursor: help;
+  margin-left: 0.25rem;
+  content: '?';
+}
+
 .js-hide {
   display: none;
 }
