@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet">
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-animate/angular-animate.js"></script>
+    <script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="../js/modal.js"></script>
+  </head>
+  <body ng-app="app">
+    <script type="text/ng-template" id="myModalContent.html">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        <ul ng-repeat="item in vm.items">
+          <li ng-click="vm.select(item)">{{ item }} ({{ vm.selected.item === item}})</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="vm.cancel()" class="btn btn-default">Close</button>
+        <button type="button" ng-click="vm.ok()" class="btn btn-primary">Save changes</button>
+      </div>
+    </script>
+
+    <script type="text/ng-template" id="myModal.html">
+      <input type="checkbox" ng-model="vm.animationsEnabled">
+      <button type="button" class="btn btn-primary btn-lg" ng-click="vm.click()">
+        Launch demo modal
+      </button>
+    </script>
+
+    <!-- Button trigger modal -->
+    <!-- deactivate animation: remove .fade class === animation: false in js -->
+    <my-modal></my-modal>
+  </body>
+</html>
