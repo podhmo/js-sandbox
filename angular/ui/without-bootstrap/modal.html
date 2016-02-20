@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/modal.css">
+  </head>
+  <body>
+    <section class="container">
+      <button data-target="#myModal" data-overlay="true">open modal(with overlay)</button>
+      <button data-target="#myModal">open modal</button>
+      <section class="js-hide modal modal--center message-box" id="myModal">
+        <h1>this is my modal</h1>
+        <p>hello this is my modal.</p>
+        <button data-target="#myModal">OK</button>
+      </section>
+    </section>
+    <script>
+      document.addEventListener('modal.overlay.show', function(e){
+        var overlay = document.createElement('div');
+        overlay.classList.add('modal-overlay');
+        document.body.appendChild(overlay)
+      });
+      document.addEventListener('modal.overlay.hide', function(e){
+        document.querySelector('.modal-overlay').remove();
+      });
+
+      document.querySelector('.container').addEventListener('click', function(e){
+        if(!(e.target.localName === 'button' && e.target.dataset.target)) {
+          return;
+        }
+        var modal = document.querySelector(e.target.dataset.target);
+        var overlay = e.target.dataset.overlay;
+        if (modal.classList.contains('js-hide')) {
+          if (overlay) {
+            document.dispatchEvent(new CustomEvent('modal.overlay.show', {}));
+          }
+          modal.classList.remove('js-hide');
+        } else {
+          document.dispatchEvent(new CustomEvent('modal.overlay.hide', {}));
+          modal.classList.add('js-hide');
+        }
+      });
+    </script>
+  </body>
+</html>
