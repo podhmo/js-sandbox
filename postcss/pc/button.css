@@ -1,9 +1,15 @@
-.button .warn {
+/* hmm */
+/* @restructure(button.css) */
+.button {
+    padding: 10px;
+}
+
+.pc .button .warn {
     background-color: orange;
 }
-.button .danger {
+.pc .button .danger {
     background-color: red;
 }
-.button .primary {
+.pc .button .primary {
     background-color: blue;
 }
