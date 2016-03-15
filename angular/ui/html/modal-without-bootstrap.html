@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="../node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="../js/modal2.js"></script>
+    <link rel="stylesheet" href="../without-bootstrap/css/layout.css">
+    <link rel="stylesheet" href="../without-bootstrap/css/modal.css">
+  </head>
+  <body ng-app="app">
+    <script type="text/ng-template" id="myModalWindow.html">
+      <div modal-render="{{$isRendered}}" tabindex="-1" class="modal modal--center message-box">
+        <div class="modal-content" uib-modal-transclude></div>
+      </div>
+    </script>
+    <script type="text/ng-template" id="myModalContent.html">
+      <h1 id="myModalLabel">Modal title</h1>
+      <ul ng-repeat="item in vm.items">
+        <li ng-click="vm.select(item)">{{ item }} ({{ vm.selected.item === item}})</li>
+      </ul>
+      <div>
+        <button type="button" ng-click="vm.cancel()">Close</button>
+        <button type="button" ng-click="vm.ok()">Save changes</button>
+      </div>
+    </script>
+    <script type="text/ng-template" id="myModal.html">
+      <section class="container">
+        <button type="button" ng-click="vm.click()">
+          Launch demo modal
+        </button>
+        <input type="checkbox" ng-model="vm.animationsEnabled">
+      </section>
+    </script>
+    <my-modal></my-modal>
+  </body>
+</html>
