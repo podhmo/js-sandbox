@@ -36,6 +36,9 @@ require('../setup')(function(angular){
     console.log("ho: %s", arguments.length);
     // this.originalUser = user;
   }
+  ChildController.prototype.init = function init() {
+    this.originalUser = this.user;
+  };
 
   function ChildDirective(){
     return {
@@ -44,11 +47,14 @@ require('../setup')(function(angular){
       bindToController: {
         user: "=user"
       },
+      link: function(scope){
+        scope.child.init();
+      },
       controller: ChildController,
       controllerAs: "child",
       template: [
-        "<p>{{::child.originalUser.name}}({{::child.originalUser.age}})</p>",
-        "<p>{{::child.user.name}}({{::child.user.age}})</p>"
+        "<p>originalUser: {{::child.originalUser.name}}({{::child.originalUser.age}})</p>",
+        "<p>user: {{::child.user.name}}({{::child.user.age}})</p>"
       ].join("\n")
     };
   }
