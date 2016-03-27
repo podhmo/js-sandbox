@@ -1,0 +1,15 @@
+{
+  "name": "incremental-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "find . -name '*.js' | xargs rm ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^1.8.9"
+  }
+}
