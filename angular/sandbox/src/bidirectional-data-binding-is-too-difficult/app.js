@@ -4,7 +4,7 @@ require('console-angular').setup((angular, document) => {
     constructor($timeout, $scope) {
       // initialized lazily
       $timeout(() => {
-        this.ob = {name: "ob", count: 0, id: 1};
+        this.ob = {name: "ob", count: 10, id: 1};
       }, 200);
 
       // watch
@@ -48,6 +48,7 @@ require('console-angular').setup((angular, document) => {
         controllerAs: 'vm',
         bindings: {
           i: "="
+          // i: "<"
         },
         template: `<a click="vm.count()">click {{vm.i}}</a>`
       };
