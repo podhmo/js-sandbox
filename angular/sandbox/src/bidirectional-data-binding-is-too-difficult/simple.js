@@ -18,12 +18,11 @@ require("console-angular").setup((angular, document) => {
   }
 
   class ParentController {
-    constructor() {
+    constructor($scope, $watch) {
       this.i = 0;
     }
 
     count(message) {
-      this.i += 1;
       console.log(`${message}${this.i}`);
     }
   }
@@ -50,17 +49,15 @@ require("console-angular").setup((angular, document) => {
     .component("parent", Parent.define())
   ;
 
-  document.body.innerHTML = `
-<parent></parent>
-    `;
+  document.body.innerHTML = `<parent></parent>`;
   const inj = angular.bootstrap(document, ["ng", "app"]);
   inj.get("$rootScope").$apply();
   console.log(angular.element(document.body).html().toString());
 
-  const s = angular.element(document.querySelector('child')).isolateScope();
+  // const s = angular.element(document.querySelector('child')).isolateScope();
 
-  s.vm.onClick();
-  s.vm.onClick();
+  // s.vm.onClick();
+  // s.vm.onClick();
   inj.get("$rootScope").$apply();
   console.log(angular.element(document.body).html().toString());
 });
