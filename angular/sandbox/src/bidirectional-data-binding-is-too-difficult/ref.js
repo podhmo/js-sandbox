@@ -9,55 +9,47 @@ require("console-angular").setup((angular, document) => {
         controller: ChildController,
         controllerAs: "vm",
         bindings: {
-          onClick: "&"
+          ob: "&"
         },
-        template: `
-        <a ng-click="vm.onClick()">click</a>`
+        template: `<pre>{{ ::vm.ob()|json }}</pre>`
       };
     }
   }
 
   class ParentController {
-    constructor() {
-      this.i = 0;
-    }
-
-    count(message) {
-      console.log(`${message}${this.i}`);
+    constructor($timeout) {
+      console.log(`*****initialize*****`);
+      $timeout(() => {
+        this.ob = {id: 1, name: "foo"};
+        console.log(`*****changed***** ${angular.toJson(this.ob)}`);
+      }, 30);
     }
   }
 
   class Parent {
-    constuctor() {
-      console.log("hai");
-    }
     static define() {
       return {
         controller: ParentController,
         controllerAs: "vm",
         bindings: {
         },
-        template: `
-<pre>i: {{vm.i}}</pre>
-<child on-click="vm.count('i: ')"></child>`
+        template: `<child ob="::vm.ob"></child>`
       };
     }
   }
 
-  angular.module("app", ['console'])
+  angular.module("app", ["console"])
     .component("child", Child.define())
     .component("parent", Parent.define())
   ;
 
   document.body.innerHTML = `<parent></parent>`;
   const inj = angular.bootstrap(document, ["ng", "app"]);
+  const $timeout = inj.get("$timeout");
   inj.get("$rootScope").$apply();
   console.log(angular.element(document.body).html().toString());
-
-  // const s = angular.element(document.querySelector('child')).isolateScope();
-
-  // s.vm.onClick();
-  // s.vm.onClick();
-  inj.get("$rootScope").$apply();
-  console.log(angular.element(document.body).html().toString());
+  $timeout(() => {
+    console.log(`*****timeout*****`);
+    console.log(angular.element(document.body).html().toString());
+  }, 100);
 });
