@@ -10,6 +10,13 @@ import * as b from "./00-base";
   display.display();
 })();
 
+// creation case2. ng;
+(() => {
+  const p = new b.Parent();
+  const display = new b.ChildDisplay(p.child);
+  // display.display();
+})();
+
 // updating case. ok;
 (() => {
   const p = new b.Parent();

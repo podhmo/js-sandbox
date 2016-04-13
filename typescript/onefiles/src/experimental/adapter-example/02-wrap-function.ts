@@ -23,6 +23,13 @@ class ChildWrapper implements b.IPerson {
   display.display();
 })();
 
+// creation case2. ok;
+(() => {
+  const p = new b.Parent();
+  const display = new b.ChildDisplay(new ChildWrapper(() => p.child));
+  display.display();
+})();
+
 // updating case. ok;
 (() => {
   const p = new b.Parent();

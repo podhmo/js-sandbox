@@ -25,6 +25,13 @@ class ChildAdapter implements b.IPerson {
   display.display();
 })();
 
+// creation case2. ok;
+(() => {
+  const p = new b.Parent();
+  const display = new b.ChildDisplay(new ChildAdapter(p));
+  display.display();
+})();
+
 // updating case. ok;
 (() => {
   const p = new b.Parent();
