@@ -1,3 +1,4 @@
+import os.path
 import json
 import cgi
 import random
@@ -13,11 +14,19 @@ def app(environ, start_response):
 
 
 def on_html(path, environ, start_response):
-    status = '200 OK'
     headers = [('Content-type', 'text/html; charset=utf-8')]
-    start_response(status, headers)
-    with open("./index.html") as rf:
-        return [rf.read()]
+    if path in ("", "/"):
+        path = "index.html"
+    try:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path.lstrip("/"))) as rf:
+            status = '200 OK'
+            start_response(status, headers)
+            return [rf.read()]
+    except Exception as e:
+        print(e)
+        status = '404 Not Found'
+        start_response(status, headers)
+        return [bytes(path)]
 
 
 data = [
