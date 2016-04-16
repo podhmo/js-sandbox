@@ -43,8 +43,8 @@ def on_api(path, environ, start_response):
 
     if environ["REQUEST_METHOD"] == "POST":
         wsgi_input = environ["wsgi.input"]
-        form = cgi.FieldStorage(fp=wsgi_input, environ=environ, keep_blank_values=True)
-        data.append({k: form[k].value for k in form if k in ("author", "text")})
+        content_length = int(environ["CONTENT_LENGTH"])
+        data.append(json.loads(wsgi_input.read(content_length)))
     else:
         data[0]["text"] = "{}".format(random.random())
     return [json.dumps(data)]

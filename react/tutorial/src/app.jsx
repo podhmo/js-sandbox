@@ -1,5 +1,6 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
+const axios = require("axios");
 
 // structure
 // - CommentBox
@@ -72,31 +73,19 @@ const CommentBox = React.createClass({
     return {data: []};
   },
   loadCommentsFromServer: function(){
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+    axios.get(this.props.url).then((response) => {
+      this.setState({data: response.data});
+    }).catch((err) => {
+      console.error(`url=${this.props.url} ${err}`);
     });
   },
   handleCommentSubmit: function(comment) {
     const comments = this.state.data;
     const newComments = comments.concat([comment]);
     this.setState({data: newComments});
-    $.ajax({
-      url: this.props.url,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      error: function(xhr, status, err) {
-        this.setState(comments);
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
+    axios.post(this.props.url, comment).catch((err) => {
+      this.setState({data: comments});
+      console.error(`url=${this.props.url} ${err}`);
     });
   },
   componentDidMount: function() {

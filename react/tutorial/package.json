@@ -16,6 +16,7 @@
     "webpack": "^1.13.0"
   },
   "dependencies": {
+    "axios": "^0.9.1",
     "jsx-loader": "^0.13.2",
     "react": "^15.0.1",
     "react-dom": "^15.0.1"
