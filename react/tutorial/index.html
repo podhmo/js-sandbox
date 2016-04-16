@@ -15,7 +15,7 @@
     <div id="content"></div>
     <script type="text/babel">
 
-const data = [
+let data = [
   {author: "Pete Hunt", text: "This is one comment"},
   {author: "Jordan Walke", text: "This is *another* comment"}
 ];
@@ -36,11 +36,25 @@ const CommentList = React.createClass({
 });
 
 const CommentForm = React.createClass({
+  handleSubmit: function(e) {
+    e.preventDefault();
+    const author = ReactDOM.findDOMNode(this.refs.author).value.trim();
+    const text = ReactDOM.findDOMNode(this.refs.text).value.trim();
+    if (!text || !author) {
+      return ;
+    }
+    this.props.onCommentSubmit({author: author, text: text});
+    ReactDOM.findDOMNode(this.refs.author).value = '';
+    ReactDOM.findDOMNode(this.refs.text).value = '';
+    return;
+  },
   render: function() {
     return (
-      <div className="commentForm">
-        Hello, world! I am a CommentForm.
-      </div>
+     <form className="commentForm" onSubmit={this.handleSubmit}>
+        <input type="text" placeholder="Your name" ref="author" />
+        <input type="text" placeholder="Say something..." ref="text" />
+        <input type="submit" value="Post" />
+     </form>
     );
   }
 });
@@ -53,7 +67,7 @@ const Comment = React.createClass({
   render: function() {
     return (
       <div className="comment">
-        <h2>
+        <h2 className="commentAuthor">
           { this.props.author }
         </h2>
         <span dangerouslySetInnerHTML={this.rawMarkup()}></span>
@@ -65,7 +79,7 @@ const CommentBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  componentDidMount: function() {
+  loadCommentsFromServer: function(){
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -78,18 +92,36 @@ const CommentBox = React.createClass({
       }.bind(this)
     });
   },
+  handleCommentSubmit: function(comment) {
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  componentDidMount: function() {
+    this.loadCommentsFromServer();
+    setInterval(this.loadCommentsFromServer, this.props.interval);
+  },
   render: function() {
     return (
         <div className="commentBox">
           <h1>Comments</h1>
           <CommentList data={this.state.data} />
-          <CommentForm />
+          <CommentForm onCommentSubmit={this.handleCommentSubmit} />
         </div>
     )
   }
 });
 ReactDOM.render(
-  <CommentBox url="api/comments" />,
+  <CommentBox url="api/comments" interval={500}/>,
   document.getElementById('content')
 );
     </script>
