@@ -4,7 +4,7 @@
   "description": "``` python server.py # browse http://localhost:8000 ```",
   "main": "app.js",
   "scripts": {
-    "build": "webpack --progress -p|| 0"
+    "build": "webpack --progress || 0"
   },
   "author": "",
   "license": "ISC",
