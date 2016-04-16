@@ -1,0 +1,14 @@
+{
+  "name": "batch-request-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "batch-request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deep-equal": "^1.0.1"
+  }
+}
