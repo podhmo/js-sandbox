@@ -13,6 +13,7 @@
     "angular-mocks": "^1.4.9",
     "console-angular": "^0.1.1",
     "lodash": "^4.0.0",
-    "restangular": "^1.5.1"
+    "restangular": "^1.5.1",
+    "angular-sanitize": "~1.5.0"
   }
 }
