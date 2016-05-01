@@ -46,6 +46,17 @@ export class FakePromiseModule {
     };
   }
 
+  withRetryNTimes<A, B>(gen: (a: A) => Promise<B>, n: number): (a: A) => Promise<B> {
+    const branch = (doRetry: () => Promise<B>, i: number, err: any) => {
+      this.log(`*: \t\tretry: i=${i}`);
+      if (i < n) {
+        return doRetry();
+      }
+      return void 0;
+    };
+    return this.withRetry<A, B>(gen, branch);
+  }
+
   withTick<A, B>(fn: PromiseFn<A, B>) {
     return (x) => {
       this.log("========================================");
@@ -71,6 +82,3 @@ export class FakePromiseModule {
     });
   }
 }
-
-
-

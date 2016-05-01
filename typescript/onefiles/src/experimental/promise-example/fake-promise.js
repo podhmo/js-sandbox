@@ -42,6 +42,17 @@ var FakePromiseModule = (function () {
             return loop(p, 1, []);
         };
     };
+    FakePromiseModule.prototype.withRetryNTimes = function (gen, n) {
+        var _this = this;
+        var branch = function (doRetry, i, err) {
+            _this.log("*: \t\tretry: i=" + i);
+            if (i < n) {
+                return doRetry();
+            }
+            return void 0;
+        };
+        return this.withRetry(gen, branch);
+    };
     FakePromiseModule.prototype.withTick = function (fn) {
         var _this = this;
         return function (x) {
