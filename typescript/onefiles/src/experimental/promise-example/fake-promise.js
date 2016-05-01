@@ -29,6 +29,33 @@ var FakePromiseModule = (function () {
             }).then(fn);
         };
     };
+    FakePromiseModule.prototype.withRetry = function (gen, branch) {
+        return function (value) {
+            function loop(p, i, errors) {
+                return p.catch(function (err) {
+                    errors.push(err);
+                    var q = branch(function () { return gen(value); }, i, err);
+                    return q !== void 0 ? loop(q, i + 1, errors) : Promise.reject({ value: value, errors: errors });
+                });
+            }
+            var p = Promise.resolve(value).then(gen);
+            return loop(p, 1, []);
+        };
+    };
+    FakePromiseModule.prototype.withTick = function (fn) {
+        var _this = this;
+        return function (x) {
+            _this.log("========================================");
+            return fn(x);
+        };
+    };
+    FakePromiseModule.prototype.withPeek = function (fn) {
+        var _this = this;
+        return function (x) {
+            _this.log("peek: " + x);
+            return fn(x);
+        };
+    };
     FakePromiseModule.prototype.display = function (p) {
         var _this = this;
         return p.then(function (v) {
