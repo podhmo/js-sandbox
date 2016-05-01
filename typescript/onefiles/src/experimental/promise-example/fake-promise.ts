@@ -1,5 +1,5 @@
 export interface PromiseFn<A, B> {
-  (a: A): B | Thenable<B>;
+  (a: A): B | Promise<B>;
 }
 
 export class FakePromiseModule {
@@ -7,7 +7,7 @@ export class FakePromiseModule {
     public log: (s: string) => void
   ) {}
 
-  toFakeAsync<A, B>(fn: PromiseFn<A, B>, d: number): (a: A)  => Promise<B> {
+  toFakeAsync<A, B>(fn: PromiseFn<A, B>, d: number): (a: A) => Promise<B> {
     return (x: A) => {
       return new Promise<A>((resolve: Function) => {
         this.log(`\twait: ${d}`);
@@ -18,7 +18,7 @@ export class FakePromiseModule {
     };
   }
 
-   toFragile<A, B>(fn: PromiseFn<A, B>, n: number): (a: A)  => Promise<B> {
+   toFragile<A, B>(fn: PromiseFn<A, B>, n: number): (a: A) => Promise<B> {
     return (x: A) => {
       return new Promise<A>((resolve: Function, reject: Function) => {
         const r = Math.random();
@@ -57,20 +57,19 @@ export class FakePromiseModule {
     return this.withRetry<A, B>(gen, branch);
   }
 
-  withTick<A, B>(fn: PromiseFn<A, B>) {
-    return (x) => {
+  withTick<A, B>(fn: PromiseFn<A, B>): (a: A|Promise<A>) => Promise<B> {
+    return (x: A|Promise<A>) => {
       this.log("========================================");
-      return fn(x);
+      return this.coerce<A>(x).then(fn);
     };
   }
 
-  withPeek<A, B>(fn: PromiseFn<A, B>) {
-    return (x) => {
+  withPeek<A, B>(fn: PromiseFn<A, B>): (a: A|Promise<A>) => Promise<B> {
+    return (x: A|Promise<A>) => {
       this.log(`peek: ${x}`);
-      return fn(x);
+      return this.coerce<A>(x).then(fn);
     };
   }
-
 
   display(p: Promise<any>) {
     return p.then((v: any) => {
@@ -81,4 +80,12 @@ export class FakePromiseModule {
       throw err;
     });
   }
+
+  private coerce<A>(a: A | Promise<A>) {
+    return isPromise<A>(a) ? a : Promise.resolve<A>(a);
+  }
+}
+
+function isPromise<A>(a: A | Promise<A>): a is Promise<A> {
+  return !!(<any>a).then;
 }

@@ -57,14 +57,14 @@ var FakePromiseModule = (function () {
         var _this = this;
         return function (x) {
             _this.log("========================================");
-            return fn(x);
+            return _this.coerce(x).then(fn);
         };
     };
     FakePromiseModule.prototype.withPeek = function (fn) {
         var _this = this;
         return function (x) {
             _this.log("peek: " + x);
-            return fn(x);
+            return _this.coerce(x).then(fn);
         };
     };
     FakePromiseModule.prototype.display = function (p) {
@@ -77,6 +77,12 @@ var FakePromiseModule = (function () {
             throw err;
         });
     };
+    FakePromiseModule.prototype.coerce = function (a) {
+        return isPromise(a) ? a : Promise.resolve(a);
+    };
     return FakePromiseModule;
 }());
 exports.FakePromiseModule = FakePromiseModule;
+function isPromise(a) {
+    return !!a.then;
+}

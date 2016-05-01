@@ -9,7 +9,7 @@ function inc(x) {
   const m = new FakePromiseModule((s: string) => {
     console.log(`*: ${s}`);
   });
-  const incAPI = m.toFakeAsync(inc, 30);
+  const incAPI = m.withPeek<number, number>(m.toFakeAsync(inc, 30));
   const p = Promise.resolve(10)
     .then(incAPI)
     .then(incAPI)
@@ -23,7 +23,7 @@ function inc(x) {
   const m = new FakePromiseModule((s: string) => {
     console.log(`$: ${s}`);
   });
-  const incAPI = m.toFakeAsync(inc, 30);
+  const incAPI = m.withPeek<number, number>(m.toFakeAsync(inc, 50));
   const p = Promise.resolve(10)
     .then((v: number) => {
       return incAPI(v).then((v: number) => {
