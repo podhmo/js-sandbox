@@ -58,10 +58,6 @@ class Container {
       return c.state.value;
     });
   }
-
-  notify(fn) {
-    return fn(this);
-  }
 }
 Container.create = (value) => {
   return new Container(new State(value, 0, 0), new Q());
