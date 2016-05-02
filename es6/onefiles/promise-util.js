@@ -6,7 +6,7 @@ function toAsync(fn, d) {
     return new Promise((resolve) => {
       setTimeout(() => {
         return resolve(x);
-      }, d);
+      }, (typeof d === 'function' ? d() : d));
     }).then(fn);
   };
 }
@@ -51,7 +51,6 @@ function withRetry(gen, branch) {
     return loop(p, 1, []);
   };
 }
-
 
 function displayPromise(p) {
   return p.then((v) => {
