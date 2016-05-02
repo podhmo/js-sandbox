@@ -1,57 +1,76 @@
 'use strict';
 const pu = require('./promise-util');
 
-class Q {
-  constructor(fns) {
-    this.fns = fns || [];
-  }
-  add(n, fn) {
-    return new Q(this.fns.concat([[n, fn]]));
-  }
-}
-class ProgressState {
-  constructor(value, current, end, q) {
+class State {
+  constructor(value, current, end) {
     this.value = value;
     this.current = current;
     this.end = end;
-    this.q = q || new Q();
+  }
+  plan(n) {
+    return new State(this.value, this.current, this.end + n);
+  }
+  act(value, n) {
+    return new State(value, this.current + n, this.end);
+  }
+}
+
+class ActQ {
+  constructor(parent, fn) {
+    this.q = parent ? parent.q : [];
+    if (fn) {
+      this.q = parent.q.concat([fn]);
+    }
+  }
+
+  start(c) {
+    let p = Promise.resolve(c);
+    this.q.forEach((fn) => {
+      p = p.then(fn);
+    });
+    return p;
+  }
+}
+
+// [f, g, g] -> [p f, p g, p h, a f, a g, a h]
+class Container {
+  constructor(state, q) {
+    this.state = state;
+    this.q = q;
   }
 
   plan(n, fn) {
-    return new ProgressState(this.value, this.current, this.end + n, this.q.add(n, fn));
-  }
-  createNotify() {
-    return (fn) => {
-      return fn(this.value, this.current, this.end);
-    };
-  }
-  consume(useNotify) {
-    let w = new ProgressState(this.value, this.current, this.end);
-    useNotify(w.createNotify());
-    let p = Promise.resolve(w);
-    this.q.fns.forEach((pair) => {
-      const n = pair[0];
-      const f = pair[1];
-      p = p.then((w) => {
-        return Promise.resolve(w.value).then(f).then((v) => {
-          w.value = v;
-          w.current += n;
-          return w;
-        });
+    const wrapped = (c) => {
+      const r = fn(c.state.value);
+      const p = r.then ? r : Promise.resolve(r);
+      return p.then((value) => {
+        c.state = c.state.act(value, n);
+        return c;
       });
+    };
+    return new Container(this.state.plan(n), new ActQ(this.q, wrapped));
+  }
+
+  start(useNotify){
+    let c = new Container(this.state, this.q);
+    useNotify((notify) => {
+      return notify(c.state);
     });
-    return p.then((w) => {
-      return w.value;
+    return c.q.start(c).then((c) => {
+      return c.state.value;
     });
+  }
+
+  notify(fn) {
+    return fn(this);
   }
 }
-ProgressState.create = (value) => {
-  return new ProgressState(value, 0, 0);
+Container.create = (value) => {
+  return new Container(new State(value, 0, 0), new ActQ());
 };
 
 function inc(v) {
-  return v.cocat([v.length + 1]);
-  // return v.concat([(Math.ceil(Math.random() * 10))]);
+  return v + 1;
 }
 function withProgress(fn, n) {
   return (w) => {
@@ -59,77 +78,39 @@ function withProgress(fn, n) {
   };
 }
 const incAPI = pu.toAsync(inc, () => {
-  return Math.floor(Math.random() * 100);
+  return Math.floor(Math.random() * 200);
 });
 
 let notifiers = [];
-const p = Promise.resolve(ProgressState.create([]))
+const p = Promise.resolve(Container.create(1))
       .then(withProgress(incAPI, 1))
       .then(withProgress(incAPI, 1))
 ;
 function stars(n, max) {
   let arr = [];
   for (let i = 0; i < max; i++) {
-    arr.push(i <= n ? "*" : ".");
+    arr.push(i < n ? "*" : ".");
   }
   return arr.join("");
 }
-pu.displayPromise(p
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then((w) => {
-    return w.consume((notify) => {
-      notifiers.push(() => {
-        notify((v, i, max) => {
-          console.log(`   * [${stars(i, max)}] -- current ${v}`);
-        });
-      });
-    });
-  }))
-;
-pu.displayPromise(p
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then((w) => {
-    return w.consume((notify) => {
-      notifiers.push(() => {
-        notify((v, i, max) => {
-          console.log(`  ** [${stars(i, max)}] -- current ${v}`);
-        });
-      });
-    });
-  }))
-;
-pu.displayPromise(p
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then((w) => {
-    return w.consume((notify) => {
-      notifiers.push(() => {
-        notify((v, i, max) => {
-          console.log(` *** [${stars(i, max)}] -- current ${v}`);
-        });
-      });
-    });
-  }))
-;
-pu.displayPromise(p
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then(withProgress(incAPI, 1))
-  .then((w) => {
-    return w.consume((notify) => {
-      notifiers.push(() => {
-        notify((v, i, max) => {
-          console.log(`**** [${stars(i, max)}] -- current ${v}`);
-        });
-      });
-    });
-  }))
-;
+
+[1, 2, 3, 4].forEach((i) => {
+  const q = p
+        .then(withProgress(incAPI, 1))
+        .then(withProgress(incAPI, 1))
+        .then(withProgress(incAPI, 1))
+        .then((w) => {
+          return w.start((notify) => {
+            notifiers.push(() => {
+              notify((s) => {
+                console.log(`${i}: [${stars(s.current, s.end)}] -- value ${s.value}`);
+              });
+            });
+          });
+        })
+  ;
+  pu.displayPromise(q);
+});
 
 (() => {
   let p = Promise.resolve(null);
@@ -138,7 +119,7 @@ pu.displayPromise(p
     notifiers.forEach((notify) => {
       notify();
     });
-  }, 10);
+  }, 30);
   for (let i = 0; i < 20; i++) {
     p = p.then(describe);
   }
