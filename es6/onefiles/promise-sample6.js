@@ -21,11 +21,20 @@ function withTimeout(fn, n) {
   };
 }
 
+// simplify
+function withTimeout2(fn, n) {
+  return (x) => {
+    const p = Promise.resolve(x);
+    const timeoutP = p.then(pu.toAsync(() => { throw new Error(`timeout: ${n}`); }, n));
+    return Promise.race([p.then(fn), timeoutP]);
+  };
+}
+
 // ok
 const st = process.hrtime();
 (() => {
   console.log(`* start: ${process.hrtime(st)}`);
-  const incAPI = withTimeout(pu.toAsync(inc, 500), 700);
+  const incAPI = withTimeout2(pu.toAsync(inc, 500), 700);
   const p = Promise.resolve(1)
         .then(incAPI)
   ;
@@ -38,7 +47,7 @@ const st = process.hrtime();
 // timeout
 (() => {
   console.log(`** start: ${process.hrtime(st)}`);
-  const incAPI = withTimeout(pu.toAsync(inc, 500), 300);
+  const incAPI = withTimeout2(pu.toAsync(inc, 500), 300);
   const p = Promise.resolve(1)
         .then(incAPI)
   ;
