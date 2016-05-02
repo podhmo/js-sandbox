@@ -2,20 +2,20 @@
 const pu = require('./promise-util');
 
 class State {
-  constructor(value, current, end) {
+  constructor(value, current, max) {
     this.value = value;
     this.current = current;
-    this.end = end;
+    this.max = max;
   }
   plan(n) {
-    return new State(this.value, this.current, this.end + n);
+    return new State(this.value, this.current, this.max + n);
   }
   act(value, n) {
-    return new State(value, this.current + n, this.end);
+    return new State(value, this.current + n, this.max);
   }
 }
 
-class ActQ {
+class Q {
   constructor(parent, fn) {
     this.q = parent ? parent.q : [];
     if (fn) {
@@ -24,11 +24,9 @@ class ActQ {
   }
 
   start(c) {
-    let p = Promise.resolve(c);
-    this.q.forEach((fn) => {
-      p = p.then(fn);
-    });
-    return p;
+    return this.q.reduce((p, fn) => {
+      return p.then(fn);
+    }, Promise.resolve(c));
   }
 }
 
@@ -48,7 +46,7 @@ class Container {
         return c;
       });
     };
-    return new Container(this.state.plan(n), new ActQ(this.q, wrapped));
+    return new Container(this.state.plan(n), new Q(this.q, wrapped));
   }
 
   start(useNotify){
@@ -66,7 +64,7 @@ class Container {
   }
 }
 Container.create = (value) => {
-  return new Container(new State(value, 0, 0), new ActQ());
+  return new Container(new State(value, 0, 0), new Q());
 };
 
 function inc(v) {
@@ -103,7 +101,7 @@ function stars(n, max) {
           return w.start((notify) => {
             notifiers.push(() => {
               notify((s) => {
-                console.log(`${i}: [${stars(s.current, s.end)}] -- value ${s.value}`);
+                console.log(`${i}: [${stars(s.current, s.max)}] -- value ${s.value}`);
               });
             });
           });
