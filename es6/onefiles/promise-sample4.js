@@ -50,7 +50,7 @@ ProgressState.create = (value) => {
 };
 
 function inc(v) {
-  return v.concat([v.length + 1]);
+  return v.cocat([v.length + 1]);
   // return v.concat([(Math.ceil(Math.random() * 10))]);
 }
 function withProgress(fn, n) {

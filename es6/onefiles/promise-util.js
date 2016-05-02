@@ -60,9 +60,9 @@ ok: ${JSON.stringify(v, null, 2)}
 ----------------------------------------`);
     return v;
   }, (err) => {
-console.log(`\
+console.error(`\
 ----------------------------------------
-ng: ${JSON.stringify(err, null, 2)}
+ng: ${JSON.stringify(err, null, 2), err.stack}
 ----------------------------------------`);
     throw err;
   });
