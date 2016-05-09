@@ -1,3 +1,6 @@
 [submodule "react/redux"]
 	path = react/redux
 	url = https://github.com/reactjs/redux.git
+[submodule "angular2/work/zone.js"]
+	path = angular2/work/zone.js
+	url = https://github.com/angular/zone.js.git

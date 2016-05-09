@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/layout.css">
+    <link rel="stylesheet" href="./css/slider.css">
+  </head>
+  <body>
+    <section class="container">
+      <div class="slider">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+    </section>
+    <script>
+      function setup(e) {
+      e.addEventListener("touchstart", (event) => {
+      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
+      });
+      e.addEventListener("touchmove", (event) => {
+      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
+      });
+      e.addEventListener("touchend", (event) => {
+      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
+      });
+      }
+      setup(document.querySelector(".slider"));
+      //Array.prototype.forEach.call(document.querySelectorAll("li"), setup);
+    </script>
+  </body>
+</html>
