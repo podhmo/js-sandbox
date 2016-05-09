@@ -9,5 +9,11 @@
     margin: 10px;
     width: 100px;
     height: 100px;
-    background-color: #4ff;
+    background-color: #2ff;
+}
+.box--active {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: #22f;
 }

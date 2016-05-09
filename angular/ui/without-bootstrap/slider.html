@@ -8,27 +8,20 @@
   <body>
     <section class="container">
       <div class="slider">
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
-        <div class="box"></div>
+        <div id="box1" class="box">1</div>
+        <div id="box2" class="box">2</div>
+        <div id="box3" class="box">3</div>
+        <div id="box4" class="box">4</div>
+        <div id="box5" class="box">5</div>
+        <div id="box6" class="box">6</div>
+        <div id="box7" class="box">7</div>
+        <div id="box8" class="box">8</div>
+        <div id="box9" class="box">9</div>
+        <div id="box10" class="box">10</div>
       </div>
     </section>
+    <script src="js/slider.js"></script>
     <script>
-      function setup(e) {
-      e.addEventListener("touchstart", (event) => {
-      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
-      });
-      e.addEventListener("touchmove", (event) => {
-      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
-      });
-      e.addEventListener("touchend", (event) => {
-      console.log(Array.prototype.map.call(event.targetTouches, (e) => e.target.innerHTML).join("\n"));
-      });
-      }
-      setup(document.querySelector(".slider"));
-      //Array.prototype.forEach.call(document.querySelectorAll("li"), setup);
     </script>
   </body>
 </html>
