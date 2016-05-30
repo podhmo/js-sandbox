@@ -45,13 +45,25 @@ var FakePromiseModule = (function () {
     FakePromiseModule.prototype.withRetryNTimes = function (gen, n) {
         var _this = this;
         var branch = function (doRetry, i, err) {
-            _this.log("*: \t\tretry: i=" + i);
+            _this.log("\t\tretry: i=" + i);
             if (i < n) {
                 return doRetry();
             }
             return void 0;
         };
         return this.withRetry(gen, branch);
+    };
+    FakePromiseModule.prototype.withTimeout = function (fn, n) {
+        var _this = this;
+        return function (value) {
+            _this.log("\ttimeout: n=" + n);
+            var p = Promise.resolve(value);
+            var ps = [
+                p.then(fn),
+                p.then(_this.toFakeAsync(function () { return Promise.reject("timeout: " + n); }, n))
+            ];
+            return Promise.race(ps);
+        };
     };
     FakePromiseModule.prototype.withTick = function (fn) {
         var _this = this;
@@ -74,6 +86,9 @@ var FakePromiseModule = (function () {
             return v;
         }, function (err) {
             _this.log("ng: " + JSON.stringify(err, null, 2));
+            if (!!err["stack"]) {
+                _this.log("stack: " + err["stack"]);
+            }
             throw err;
         });
     };

@@ -48,13 +48,25 @@ export class FakePromiseModule {
 
   withRetryNTimes<A, B>(gen: (a: A) => Promise<B>, n: number): (a: A) => Promise<B> {
     const branch = (doRetry: () => Promise<B>, i: number, err: any) => {
-      this.log(`*: \t\tretry: i=${i}`);
+      this.log(`\t\tretry: i=${i}`);
       if (i < n) {
         return doRetry();
       }
       return void 0;
     };
     return this.withRetry<A, B>(gen, branch);
+  }
+
+  withTimeout<A, B>(fn: PromiseFn<A, B>, n: number): (a: A) => Promise<B> {
+    return (value: A) => {
+      this.log(`\ttimeout: n=${n}`);
+      const p = Promise.resolve(value);
+      const ps: Promise<B>[] = [
+        p.then(fn),
+        p.then(this.toFakeAsync<A, B>(() => { return Promise.reject(`timeout: ${n}`); }, n))
+      ];
+      return Promise.race<B>(ps);
+    };
   }
 
   withTick<A, B>(fn: PromiseFn<A, B>): (a: A|Promise<A>) => Promise<B> {
@@ -77,6 +89,9 @@ export class FakePromiseModule {
       return v;
     }, (err: any) => {
       this.log(`ng: ${JSON.stringify(err, null, 2)}`);
+      if (!!err["stack"]) {
+        this.log(`stack: ${err["stack"]}`);
+      }
       throw err;
     });
   }
