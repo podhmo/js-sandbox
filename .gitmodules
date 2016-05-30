@@ -4,3 +4,6 @@
 [submodule "angular2/work/zone.js"]
 	path = angular2/work/zone.js
 	url = https://github.com/angular/zone.js.git
+[submodule "rx/xstream"]
+	path = rx/xstream
+	url = https://github.com/staltz/xstream.git
